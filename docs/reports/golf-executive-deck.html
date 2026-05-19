@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Golf executive — 2026</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css" />
+  <style>
+    .reveal table { font-size: 0.55em; }
+    .reveal table.dense td, .reveal table.dense th { padding: 0.2em 0.35em; }
+    .reveal .small { font-size: 0.65em; opacity: 0.9; }
+    .reveal .warn { color: #a33; }
+    .reveal h1 { text-transform: none; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <h1>Golf executive — 2026</h1>
+        <p>Rounds + launch-monitor practice</p>
+        <p><small>Generated locally — open this file in a browser.</small></p>
+      </section>
+      
+<section>
+  <h2>Rounds — Garmin (2026)</h2>
+  <ul>
+    <li>Scorecards in export (2026): <strong>10</strong></li>
+    <li>Mean vs par (where recorded): <strong>—</strong></li>
+    <li>Scorecards used for SG filter: <strong>10</strong></li>
+    <li>Sample shots with <code>strokesGained</code>: <strong>189</strong></li>
+  </ul>
+  <p class="small">Last-10 SG rows are Garmin’s recent-window samples; only rows with &lt;code&gt;scorecardId&lt;/code&gt; tied to 2026 scorecards are counted.</p>
+</section>
+<section>
+  <h3>Strokes gained (sample)</h3>
+  <table>
+    <thead><tr><th>Category</th><th>n</th><th>Σ SG</th><th>Mean SG</th></tr></thead>
+    <tbody>
+      <tr><td>Approach</td><td>107</td><td>-38.230</td><td>-0.357</td></tr>
+      <tr><td>Around the green</td><td>82</td><td>-34.960</td><td>-0.426</td></tr>
+      <tr><td><strong>Combined</strong></td><td>189</td><td>-73.190</td><td>-0.387</td></tr>
+    </tbody>
+  </table>
+</section>
+
+      
+<section>
+  <h2>Training — Rapsodo (2026)</h2>
+  <ul>
+    <li>Shots in cohort after year filter: <strong>113</strong></li>
+    <li>Session year from &lt;code&gt;rapsodo_session_list.json&lt;/code&gt; start dates, or &lt;code&gt;started_at&lt;/code&gt; fallback.</li>
+  </ul>
+</section>
+<section>
+  <h3>Dispersion by club</h3>
+  <small>FLAG = lateral dispersion vs length dispersion rules (see analysis-plan report).</small>
+  <table class="dense">
+    <thead>
+      <tr>
+        <th>Club</th><th>n</th><th>Mean carry</th><th>σ carry</th><th>σ offline</th><th>Lat/len</th><th>FLAG</th>
+      </tr>
+    </thead>
+    <tbody><tr><td>d</td><td>41</td><td>183.2</td><td>15.04</td><td>31.08</td><td>2.066</td><td>Yes</td></tr>
+<tr><td>7i</td><td>34</td><td>135.3</td><td>20.89</td><td>12.72</td><td>0.609</td><td>Yes</td></tr>
+<tr><td>3h</td><td>10</td><td>155.3</td><td>15.20</td><td>25.15</td><td>1.655</td><td>Yes</td></tr>
+<tr><td>5w</td><td>9</td><td>171.5</td><td>12.03</td><td>12.75</td><td>1.060</td><td>Yes</td></tr>
+<tr><td>5h</td><td>8</td><td>157.4</td><td>9.03</td><td>19.18</td><td>2.124</td><td>Yes</td></tr>
+</tbody>
+  </table>
+</section>
+<section>
+  <h2>Next range session</h2>
+  <ul><li><strong>d</strong> (41 shots): prioritize start-line and face control; watch offline std (31.1 yd) vs carry std (15.0 yd).</li>
+<li><strong>7i</strong> (34 shots): prioritize start-line and face control; watch offline std (12.7 yd) vs carry std (20.9 yd).</li>
+<li><strong>3h</strong> (10 shots): prioritize start-line and face control; watch offline std (25.2 yd) vs carry std (15.2 yd).</li>
+<li><strong>5w</strong> (9 shots): prioritize start-line and face control; watch offline std (12.8 yd) vs carry std (12.0 yd).</li>
+<li><strong>5h</strong> (8 shots): prioritize start-line and face control; watch offline std (19.2 yd) vs carry std (9.0 yd).</li>
+</ul>
+</section>
+
+      <section>
+        <h2>Data sources</h2>
+        <ul>
+          <li>Garmin Golf Community JSON (scorecards, last-10 SG samples)</li>
+          <li>SQLite library + Rapsodo CSV cohort rules</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+  <script>
+    Reveal.initialize({ hash: true, slideNumber: true, transition: "slide" });
+  </script>
+</body>
+</html>

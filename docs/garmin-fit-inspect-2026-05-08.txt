@@ -1,0 +1,785 @@
+=== 2026-05-08_16_56_31_22811494476.zip :: 22811494476_ACTIVITY.fit ===
+Total data messages: 14360
+Distinct (mesg_num, name) types: 25
+
+ mesg#  name                                   count
+--------------------------------------------------------
+   160  gps_metadata                            6416
+   233  unknown_233                             6416
+    20  record                                  1195
+   325  unknown_325                              187
+   326  unknown_326                              108
+    23  device_info                               12
+   288  unknown_288                                6
+    21  event                                      2
+   216  unknown_216                                2
+     0  file_id                                    1
+     2  device_settings                            1
+     3  user_profile                               1
+     7  zones_target                               1
+    12  sport                                      1
+    13  unknown_13                                 1
+    18  session                                    1
+    19  lap                                        1
+    22  unknown_22                                 1
+    34  activity                                   1
+    49  file_creator                               1
+    79  unknown_79                                 1
+   140  unknown_140                                1
+   141  unknown_141                                1
+   147  unknown_147                                1
+   327  unknown_327                                1
+
+--- message type: record × 1195 ---
+Union of field keys (9): distance, enhanced_altitude, enhanced_speed, heart_rate, position_lat, position_long, timestamp, unknown_135, unknown_136
+Sample: first record (subset of keys):
+  distance: 0.64
+  enhanced_altitude: 46.0
+  enhanced_speed: 0.0
+  heart_rate: 127
+  position_lat: 606569948
+  position_long: -4634656
+  timestamp: "2026-05-08T15:56:31"
+  unknown_135: 176
+  unknown_136: 127
+Sample: record #50 (subset):
+  distance: 92.55
+  enhanced_altitude: 49.799999999999955
+  enhanced_speed: 1.633
+  heart_rate: 143
+  position_lat: 606577004
+  position_long: -4631816
+  timestamp: "2026-05-08T16:02:48"
+  unknown_135: 176
+  unknown_136: 143
+Sample: last record (subset):
+  distance: 3677.57
+  enhanced_altitude: 104.0
+  enhanced_speed: 0.0
+  heart_rate: 115
+  position_lat: 606637069
+  position_long: -4582108
+  timestamp: "2026-05-08T17:43:23"
+  unknown_135: 162
+  unknown_136: 115
+
+--- gps_metadata (mesg_num=160) × 6416 ---
+Field keys (2): enhanced_altitude, enhanced_speed
+Sample 1/3:
+  enhanced_altitude: 39.0
+  enhanced_speed: 0.0
+Sample 2/3:
+  enhanced_altitude: 38.799999999999955
+  enhanced_speed: 0.0
+Sample 3/3:
+  enhanced_altitude: 38.799999999999955
+  enhanced_speed: 0.0
+
+--- unknown_233 (mesg_num=233) × 6416 ---
+Field keys (1): unknown_2
+Sample 1/3:
+  unknown_2: [6, 0, 0, 200]
+Sample 2/3:
+  unknown_2: [10, 0, 0, 24]
+Sample 3/3:
+  unknown_2: [10, 64, 1, 32]
+
+--- unknown_325 (mesg_num=325) × 187 ---
+Field keys (7): unknown_0, unknown_1, unknown_2, unknown_253, unknown_3, unknown_4, unknown_5
+Sample 1/3:
+  unknown_0: 171
+  unknown_1: 10
+  unknown_2: 1
+  unknown_253: 1147190192
+  unknown_3: 70
+  unknown_4: 5
+  unknown_5: 80
+Sample 2/3:
+  unknown_0: 141
+  unknown_1: 8
+  unknown_2: 2
+  unknown_253: 1147190210
+  unknown_3: 36
+  unknown_4: 36
+  unknown_5: 64
+Sample 3/3:
+  unknown_0: 171
+  unknown_1: 10
+  unknown_2: 1
+  unknown_253: 1147190215
+  unknown_3: 70
+  unknown_4: 5
+  unknown_5: 80
+
+--- unknown_326 (mesg_num=326) × 108 ---
+Field keys (3): unknown_0, unknown_1, unknown_253
+Sample 1/3:
+  unknown_0: 41
+  unknown_1: None
+  unknown_253: 1147190191
+Sample 2/3:
+  unknown_0: 11
+  unknown_1: None
+  unknown_253: 1147190235
+Sample 3/3:
+  unknown_0: 11
+  unknown_1: None
+  unknown_253: 1147190296
+
+--- device_info (mesg_num=23) × 12 ---
+Field keys (28): ant_device_number, ant_network, ant_transmission_type, battery_status, battery_voltage, cum_operating_time, device_index, device_type, garmin_product, hardware_version, manufacturer, product, serial_number, software_version, source_type, timestamp, unknown_13, unknown_15, unknown_16, unknown_17, unknown_23, unknown_24, unknown_29, unknown_30, unknown_31, unknown_32, unknown_8, unknown_9
+Sample 1/3:
+  ant_device_number: None
+  ant_network: None
+  ant_transmission_type: None
+  battery_status: None
+  battery_voltage: None
+  cum_operating_time: None
+  device_index: "creator"
+  device_type: None
+  garmin_product: 3224
+  hardware_version: None
+  manufacturer: "garmin"
+  serial_number: 3361702307
+  software_version: 8.3
+  source_type: "local"
+  timestamp: "2026-05-08T15:56:31"
+  unknown_13: None
+  unknown_15: None
+  unknown_16: None
+  unknown_17: None
+  unknown_23: None
+  unknown_24: None
+  unknown_29: [null, null, null, null, null, null]
+  unknown_30: None
+  unknown_31: None
+  unknown_32: None
+  unknown_8: None
+  unknown_9: None
+Sample 2/3:
+  ant_device_number: None
+  ant_network: None
+  ant_transmission_type: None
+  battery_status: None
+  battery_voltage: None
+  cum_operating_time: None
+  device_index: 1
+  device_type: 4
+  garmin_product: 3224
+  hardware_version: None
+  manufacturer: "garmin"
+  serial_number: None
+  software_version: 8.3
+  source_type: "local"
+  timestamp: "2026-05-08T15:56:31"
+  unknown_13: None
+  unknown_15: None
+  unknown_16: None
+  unknown_17: None
+  unknown_23: None
+  unknown_24: None
+  unknown_29: [null, null, null, null, null, null]
+  unknown_30: None
+  unknown_31: None
+  unknown_32: None
+  unknown_8: None
+  unknown_9: None
+Sample 3/3:
+  ant_device_number: None
+  ant_network: None
+  ant_transmission_type: None
+  battery_status: None
+  battery_voltage: None
+  cum_operating_time: None
+  device_index: 2
+  device_type: 0
+  garmin_product: 4197
+  hardware_version: None
+  manufacturer: "garmin"
+  serial_number: None
+  software_version: 6.0
+  source_type: "local"
+  timestamp: "2026-05-08T15:56:31"
+  unknown_13: None
+  unknown_15: None
+  unknown_16: None
+  unknown_17: None
+  unknown_23: None
+  unknown_24: None
+  unknown_29: [null, null, null, null, null, null]
+  unknown_30: None
+  unknown_31: None
+  unknown_32: None
+  unknown_8: None
+  unknown_9: None
+
+--- unknown_288 (mesg_num=288) × 6 ---
+Field keys (4): unknown_0, unknown_1, unknown_2, unknown_253
+Sample 1/3:
+  unknown_0: 15
+  unknown_1: 67
+  unknown_2: 26
+  unknown_253: 1147190191
+Sample 2/3:
+  unknown_0: 16
+  unknown_1: 68
+  unknown_2: 17476
+  unknown_253: 1147190194
+Sample 3/3:
+  unknown_0: 16
+  unknown_1: 68
+  unknown_2: 0
+  unknown_253: 1147191398
+
+--- event (mesg_num=21) × 2 ---
+Field keys (5): event, event_group, event_type, timer_trigger, timestamp
+Sample 1/2:
+  event: "timer"
+  event_group: 0
+  event_type: "start"
+  timer_trigger: "manual"
+  timestamp: "2026-05-08T15:56:31"
+Sample 2/2:
+  event: "timer"
+  event_group: 0
+  event_type: "stop_all"
+  timer_trigger: "manual"
+  timestamp: "2026-05-08T17:43:28"
+
+--- unknown_216 (mesg_num=216) × 2 ---
+Field keys (9): unknown_0, unknown_1, unknown_10, unknown_11, unknown_12, unknown_13, unknown_2, unknown_253, unknown_6
+Sample 1/2:
+  unknown_0: 19
+  unknown_1: 0
+  unknown_10: 1
+  unknown_11: 187
+  unknown_12: 0
+  unknown_13: None
+  unknown_2: [0, 214004, 3733994, 2136003, 331997, 0, 0]
+  unknown_253: 1147196608
+  unknown_6: [94, 112, 131, 150, 168, 187]
+Sample 2/2:
+  unknown_0: 18
+  unknown_1: 0
+  unknown_10: 1
+  unknown_11: 187
+  unknown_12: 0
+  unknown_13: None
+  unknown_2: [0, 214004, 3733994, 2136003, 331997, 0, 0]
+  unknown_253: 1147196608
+  unknown_6: [94, 112, 131, 150, 168, 187]
+
+--- file_id (mesg_num=0) × 1 ---
+Field keys (7): garmin_product, manufacturer, number, serial_number, time_created, type, unknown_7
+Sample 1/1:
+  garmin_product: 3224
+  manufacturer: "garmin"
+  number: None
+  serial_number: 3361702307
+  time_created: "2026-05-08T15:56:31"
+  type: "activity"
+  unknown_7: None
+
+--- device_settings (mesg_num=2) × 1 ---
+Field keys (76): active_time_zone, activity_tracker_enabled, auto_activity_detect, autosync_min_steps, autosync_min_time, backlight_mode, ble_auto_upload_enabled, date_mode, display_orientation, mounting_side, move_alert_enabled, number_of_screens, time_mode, time_offset, time_zone_offset, unknown_10, unknown_101, unknown_104, unknown_11, unknown_113, unknown_115, unknown_124, unknown_125, unknown_126, unknown_127, unknown_128, unknown_133, unknown_135, unknown_136, unknown_14, unknown_140, unknown_141, unknown_142, unknown_143, unknown_144, unknown_145, unknown_146, unknown_147, unknown_149, unknown_15, unknown_151, unknown_153, unknown_154, unknown_155, unknown_156, unknown_157, unknown_158, unknown_160, unknown_161, unknown_163, unknown_164, unknown_172, unknown_21, unknown_26, unknown_3, unknown_35, unknown_38, unknown_41, unknown_45, unknown_48, unknown_49, unknown_61, unknown_62, unknown_63, unknown_65, unknown_66, unknown_67, unknown_68, unknown_69, unknown_81, unknown_82, unknown_83, unknown_84, unknown_87, unknown_93, utc_offset
+Sample 1/1:
+  active_time_zone: 0
+  activity_tracker_enabled: true
+  auto_activity_detect: "running"
+  autosync_min_steps: 2000
+  autosync_min_time: 240
+  backlight_mode: "auto_brightness"
+  ble_auto_upload_enabled: true
+  date_mode: "day_month"
+  display_orientation: "landscape"
+  mounting_side: "left"
+  move_alert_enabled: false
+  number_of_screens: 5
+  time_mode: "hour24"
+  time_offset: 3600
+  time_zone_offset: 0.0
+  unknown_10: 0
+  unknown_101: 2
+  unknown_104: [0, 11, 4, 3, 6, 2, 8, 13, 15, 1]
+  unknown_11: 2
+  unknown_113: 0
+  unknown_115: 2
+  unknown_124: 10
+  unknown_125: None
+  unknown_126: 1
+  unknown_127: 1
+  unknown_128: 1
+  unknown_133: 1
+  unknown_135: 0
+  unknown_136: 1
+  unknown_14: 10
+  unknown_140: 0
+  unknown_141: 0
+  unknown_142: None
+  unknown_143: 100
+  unknown_144: 1
+  unknown_145: 1
+  unknown_146: None
+  unknown_147: None
+  unknown_149: 0
+  unknown_15: 50
+  unknown_151: None
+  unknown_153: None
+  unknown_154: [null, null, null]
+  unknown_155: None
+  unknown_156: None
+  unknown_157: [null, null, null]
+  unknown_158: 1
+  unknown_160: 1
+  unknown_161: 0
+  unknown_163: 0
+  unknown_164: 40
+  unknown_172: 1
+  unknown_21: 1
+  unknown_26: 254
+  unknown_3: 2
+  unknown_35: 1
+  unknown_38: 1
+  unknown_41: 0
+  unknown_45: 1
+  unknown_48: 0
+  unknown_49: 0
+  unknown_61: 1
+  unknown_62: 0
+  unknown_63: [1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1]
+  unknown_65: 1
+  unknown_66: 2
+  unknown_67: 0
+  unknown_68: 0
+  unknown_69: 2
+  unknown_81: 1
+  unknown_82: 1
+  unknown_83: 1
+  unknown_84: 0
+  unknown_87: 1
+  unknown_93: 1
+  utc_offset: 0
+
+--- user_profile (mesg_num=3) × 1 ---
+Field keys (28): activity_class, dist_setting, elev_setting, gender, height, height_setting, hr_setting, language, position_setting, resting_heart_rate, sleep_time, speed_setting, temperature_setting, unknown_24, unknown_33, unknown_39, unknown_43, unknown_44, unknown_45, unknown_52, unknown_53, unknown_54, unknown_57, user_running_step_length, user_walking_step_length, wake_time, weight, weight_setting
+Sample 1/1:
+  activity_class: 50
+  dist_setting: "statute"
+  elev_setting: "statute"
+  gender: "male"
+  height: 1.88
+  height_setting: "metric"
+  hr_setting: "max"
+  language: "english"
+  position_setting: "degree_minute_second"
+  resting_heart_rate: 0
+  sleep_time: "22:30:00"
+  speed_setting: "statute"
+  temperature_setting: "metric"
+  unknown_24: 87
+  unknown_33: 0
+  unknown_39: 1.961817850054744e-44
+  unknown_43: 0
+  unknown_44: 24
+  unknown_45: 11
+  unknown_52: 1
+  unknown_53: 2
+  unknown_54: 3
+  unknown_57: None
+  user_running_step_length: 0.0
+  user_walking_step_length: 0.0
+  wake_time: "07:00:27"
+  weight: 90.2
+  weight_setting: "metric"
+
+--- zones_target (mesg_num=7) × 1 ---
+Field keys (9): functional_threshold_power, hr_calc_type, max_heart_rate, pwr_calc_type, threshold_heart_rate, unknown_10, unknown_254, unknown_8, unknown_9
+Sample 1/1:
+  functional_threshold_power: 200
+  hr_calc_type: "percent_max_hr"
+  max_heart_rate: 187
+  pwr_calc_type: "percent_ftp"
+  threshold_heart_rate: None
+  unknown_10: None
+  unknown_254: 0
+  unknown_8: None
+  unknown_9: 0
+
+--- sport (mesg_num=12) × 1 ---
+Field keys (9): name, sport, sub_sport, unknown_10, unknown_12, unknown_21, unknown_4, unknown_5, unknown_6
+Sample 1/1:
+  name: "Golf"
+  sport: "golf"
+  sub_sport: "generic"
+  unknown_10: [0, null, 0]
+  unknown_12: None
+  unknown_21: None
+  unknown_4: 29
+  unknown_5: 1
+  unknown_6: 0
+
+--- unknown_13 (mesg_num=13) × 1 ---
+Field keys (23): unknown_11, unknown_13, unknown_14, unknown_15, unknown_16, unknown_22, unknown_23, unknown_254, unknown_27, unknown_28, unknown_29, unknown_3, unknown_4, unknown_5, unknown_54, unknown_6, unknown_60, unknown_65, unknown_7, unknown_72, unknown_76, unknown_8, unknown_83
+Sample 1/1:
+  unknown_11: None
+  unknown_13: None
+  unknown_14: None
+  unknown_15: None
+  unknown_16: None
+  unknown_22: None
+  unknown_23: None
+  unknown_254: 0
+  unknown_27: 2
+  unknown_28: None
+  unknown_29: None
+  unknown_3: None
+  unknown_4: None
+  unknown_5: None
+  unknown_54: None
+  unknown_6: None
+  unknown_60: None
+  unknown_65: None
+  unknown_7: None
+  unknown_72: None
+  unknown_76: None
+  unknown_8: None
+  unknown_83: None
+
+--- session (mesg_num=18) × 1 ---
+Field keys (86): avg_cadence, avg_fractional_cadence, avg_heart_rate, avg_power, avg_speed, avg_stance_time, avg_stance_time_percent, avg_stroke_count, avg_stroke_distance, avg_temperature, enhanced_avg_speed, enhanced_max_speed, event, event_group, event_type, first_lap_index, intensity_factor, left_right_balance, max_cadence, max_fractional_cadence, max_heart_rate, max_power, max_speed, max_temperature, message_index, nec_lat, nec_long, normalized_power, num_active_lengths, num_laps, pool_length, pool_length_unit, sport, sport_index, start_position_lat, start_position_long, start_time, sub_sport, swc_lat, swc_long, swim_stroke, threshold_power, timestamp, total_ascent, total_calories, total_cycles, total_descent, total_distance, total_elapsed_time, total_fractional_cycles, total_timer_time, total_training_effect, total_work, training_stress_score, trigger, unknown_109, unknown_110, unknown_147, unknown_148, unknown_149, unknown_150, unknown_151, unknown_152, unknown_157, unknown_158, unknown_169, unknown_170, unknown_177, unknown_178, unknown_179, unknown_180, unknown_184, unknown_189, unknown_190, unknown_194, unknown_195, unknown_196, unknown_201, unknown_202, unknown_33, unknown_38, unknown_39, unknown_78, unknown_79, unknown_80, unknown_81
+Sample 1/1:
+  avg_cadence: None
+  avg_fractional_cadence: None
+  avg_heart_rate: 128
+  avg_power: None
+  avg_speed: None
+  avg_stance_time: None
+  avg_stance_time_percent: None
+  avg_stroke_count: None
+  avg_stroke_distance: None
+  avg_temperature: None
+  enhanced_avg_speed: None
+  enhanced_max_speed: None
+  event: "lap"
+  event_group: None
+  event_type: "stop"
+  first_lap_index: 0
+  intensity_factor: None
+  left_right_balance: None
+  max_cadence: None
+  max_fractional_cadence: None
+  max_heart_rate: 163
+  max_power: None
+  max_speed: None
+  max_temperature: None
+  message_index: 0
+  nec_lat: 606697261
+  nec_long: -4536617
+  normalized_power: None
+  num_active_lengths: None
+  num_laps: 1
+  pool_length: None
+  pool_length_unit: None
+  sport: "golf"
+  sport_index: None
+  start_position_lat: 606569948
+  start_position_long: -4634656
+  start_time: "2026-05-08T15:56:31"
+  sub_sport: "generic"
+  swc_lat: 606569731
+  swc_long: -4635691
+  swim_stroke: None
+  threshold_power: None
+  timestamp: "2026-05-08T17:43:28"
+  total_ascent: 98
+  total_calories: 852
+  total_cycles: None
+  total_descent: 41
+  total_distance: 3677.57
+  total_elapsed_time: 6416.113
+  total_fractional_cycles: None
+  total_timer_time: 6416.113
+  total_training_effect: None
+  total_work: None
+  training_stress_score: None
+  trigger: "activity_end"
+  unknown_109: None
+  unknown_110: "Golf"
+  unknown_147: None
+  unknown_148: None
+  unknown_149: None
+  unknown_150: None
+  unknown_151: 0
+  unknown_152: 0
+  unknown_157: None
+  unknown_158: None
+  unknown_169: None
+  unknown_170: None
+  unknown_177: None
+  unknown_178: 953
+  unknown_179: None
+  unknown_180: None
+  unknown_184: 0
+  unknown_189: None
+  unknown_190: None
+  unknown_194: None
+  unknown_195: None
+  unknown_196: 171
+  unknown_201: None
+  unknown_202: None
+  unknown_33: None
+  unknown_38: 606637069
+  unknown_39: -4582108
+  unknown_78: None
+  unknown_79: None
+  unknown_80: None
+  unknown_81: 0
+
+--- lap (mesg_num=19) × 1 ---
+Field keys (68): avg_cadence, avg_fractional_cadence, avg_heart_rate, avg_power, avg_speed, avg_stance_time, avg_stance_time_percent, avg_stroke_distance, avg_temperature, end_position_lat, end_position_long, enhanced_avg_altitude, enhanced_avg_speed, enhanced_max_altitude, enhanced_max_speed, enhanced_min_altitude, event, event_group, event_type, first_length_index, intensity, lap_trigger, left_right_balance, max_cadence, max_fractional_cadence, max_heart_rate, max_power, max_speed, max_temperature, message_index, normalized_power, num_active_lengths, num_lengths, sport, start_position_lat, start_position_long, start_time, sub_sport, swim_stroke, timestamp, total_ascent, total_calories, total_cycles, total_descent, total_distance, total_elapsed_time, total_fractional_cycles, total_timer_time, total_work, unknown_124, unknown_125, unknown_126, unknown_136, unknown_137, unknown_143, unknown_145, unknown_147, unknown_148, unknown_155, unknown_27, unknown_28, unknown_29, unknown_30, unknown_70, unknown_72, unknown_73, unknown_90, wkt_step_index
+Sample 1/1:
+  avg_cadence: None
+  avg_fractional_cadence: None
+  avg_heart_rate: 128
+  avg_power: None
+  avg_speed: None
+  avg_stance_time: None
+  avg_stance_time_percent: None
+  avg_stroke_distance: None
+  avg_temperature: None
+  end_position_lat: 606637069
+  end_position_long: -4582108
+  enhanced_avg_altitude: None
+  enhanced_avg_speed: None
+  enhanced_max_altitude: None
+  enhanced_max_speed: None
+  enhanced_min_altitude: None
+  event: "lap"
+  event_group: None
+  event_type: "stop"
+  first_length_index: None
+  intensity: None
+  lap_trigger: "session_end"
+  left_right_balance: None
+  max_cadence: None
+  max_fractional_cadence: None
+  max_heart_rate: 163
+  max_power: None
+  max_speed: None
+  max_temperature: None
+  message_index: 0
+  normalized_power: None
+  num_active_lengths: None
+  num_lengths: None
+  sport: "golf"
+  start_position_lat: 606569948
+  start_position_long: -4634656
+  start_time: "2026-05-08T15:56:31"
+  sub_sport: "generic"
+  swim_stroke: None
+  timestamp: "2026-05-08T17:43:28"
+  total_ascent: 98
+  total_calories: 852
+  total_cycles: None
+  total_descent: 41
+  total_distance: 3677.57
+  total_elapsed_time: 6416.113
+  total_fractional_cycles: None
+  total_timer_time: 6416.113
+  total_work: None
+  unknown_124: None
+  unknown_125: None
+  unknown_126: None
+  unknown_136: None
+  unknown_137: None
+  unknown_143: None
+  unknown_145: 953
+  unknown_147: None
+  unknown_148: None
+  unknown_155: 171
+  unknown_27: 606697261
+  unknown_28: -4536617
+  unknown_29: 606569731
+  unknown_30: -4635691
+  unknown_70: None
+  unknown_72: None
+  unknown_73: None
+  unknown_90: None
+  wkt_step_index: None
+
+--- unknown_22 (mesg_num=22) × 1 ---
+Field keys (8): unknown_0, unknown_1, unknown_14, unknown_2, unknown_253, unknown_3, unknown_4, unknown_5
+Sample 1/1:
+  unknown_0: 2
+  unknown_1: 2
+  unknown_14: None
+  unknown_2: None
+  unknown_253: 1147190191
+  unknown_3: 1
+  unknown_4: 4
+  unknown_5: 3
+
+--- activity (mesg_num=34) × 1 ---
+Field keys (9): event, event_group, event_type, local_timestamp, num_sessions, timestamp, total_timer_time, type, unknown_7
+Sample 1/1:
+  event: "activity"
+  event_group: None
+  event_type: "stop"
+  local_timestamp: "2026-05-08T18:43:28"
+  num_sessions: 1
+  timestamp: "2026-05-08T17:43:28"
+  total_timer_time: 6416.113
+  type: "manual"
+  unknown_7: None
+
+--- file_creator (mesg_num=49) × 1 ---
+Field keys (3): hardware_version, software_version, unknown_2
+Sample 1/1:
+  hardware_version: None
+  software_version: 830
+  unknown_2: None
+
+--- unknown_79 (mesg_num=79) × 1 ---
+Field keys (20): unknown_0, unknown_1, unknown_10, unknown_15, unknown_16, unknown_17, unknown_18, unknown_19, unknown_2, unknown_20, unknown_21, unknown_22, unknown_253, unknown_3, unknown_4, unknown_5, unknown_6, unknown_7, unknown_8, unknown_9
+Sample 1/1:
+  unknown_0: 12899
+  unknown_1: 38
+  unknown_10: 63
+  unknown_15: 55
+  unknown_16: 4008707064
+  unknown_17: 825586
+  unknown_18: 825586
+  unknown_19: 825586
+  unknown_2: 188
+  unknown_20: 0
+  unknown_21: 205747
+  unknown_22: 1429112
+  unknown_253: 1147190191
+  unknown_3: 900
+  unknown_4: 1
+  unknown_5: 60
+  unknown_6: 187
+  unknown_7: 1
+  unknown_8: 1
+  unknown_9: 656
+
+--- unknown_140 (mesg_num=140) × 1 ---
+Field keys (45): unknown_0, unknown_1, unknown_10, unknown_11, unknown_12, unknown_13, unknown_18, unknown_19, unknown_2, unknown_20, unknown_22, unknown_23, unknown_24, unknown_25, unknown_253, unknown_26, unknown_27, unknown_28, unknown_29, unknown_3, unknown_30, unknown_31, unknown_32, unknown_33, unknown_34, unknown_35, unknown_36, unknown_37, unknown_38, unknown_39, unknown_4, unknown_40, unknown_41, unknown_42, unknown_43, unknown_44, unknown_45, unknown_46, unknown_47, unknown_48, unknown_5, unknown_6, unknown_7, unknown_8, unknown_9
+Sample 1/1:
+  unknown_0: 116
+  unknown_1: 0
+  unknown_10: 6810
+  unknown_11: 25
+  unknown_12: 0
+  unknown_13: 0
+  unknown_18: None
+  unknown_19: None
+  unknown_2: 526669
+  unknown_20: 8
+  unknown_22: 8
+  unknown_23: 0
+  unknown_24: 1407843
+  unknown_25: 41
+  unknown_253: 1147196608
+  unknown_26: 3929997
+  unknown_27: 0
+  unknown_28: 0
+  unknown_29: 0
+  unknown_3: 3929997
+  unknown_30: 16
+  unknown_31: 68
+  unknown_32: 6113123
+  unknown_33: 0
+  unknown_34: 0
+  unknown_35: 6416207
+  unknown_36: 367757
+  unknown_37: 4426858
+  unknown_38: 496861
+  unknown_39: 4426858
+  unknown_4: 31
+  unknown_40: 496861
+  unknown_41: 2
+  unknown_42: 0
+  unknown_43: 0
+  unknown_44: 0
+  unknown_45: 0
+  unknown_46: 1
+  unknown_47: None
+  unknown_48: 1147200208
+  unknown_5: 256419
+  unknown_6: 55885215
+  unknown_7: 0
+  unknown_8: 0
+  unknown_9: 1432
+
+--- unknown_141 (mesg_num=141) × 1 ---
+Field keys (7): unknown_0, unknown_1, unknown_2, unknown_253, unknown_3, unknown_4, unknown_5
+Sample 1/1:
+  unknown_0: 0
+  unknown_1: None
+  unknown_2: None
+  unknown_253: 1147190191
+  unknown_3: None
+  unknown_4: None
+  unknown_5: None
+
+--- unknown_147 (mesg_num=147) × 1 ---
+Field keys (44): unknown_0, unknown_1, unknown_10, unknown_11, unknown_12, unknown_13, unknown_17, unknown_18, unknown_19, unknown_2, unknown_20, unknown_21, unknown_24, unknown_254, unknown_3, unknown_32, unknown_33, unknown_34, unknown_36, unknown_37, unknown_38, unknown_39, unknown_4, unknown_40, unknown_41, unknown_44, unknown_45, unknown_46, unknown_47, unknown_49, unknown_5, unknown_50, unknown_51, unknown_52, unknown_53, unknown_6, unknown_62, unknown_63, unknown_64, unknown_65, unknown_7, unknown_73, unknown_8, unknown_9
+Sample 1/1:
+  unknown_0: None
+  unknown_1: None
+  unknown_10: None
+  unknown_11: None
+  unknown_12: None
+  unknown_13: None
+  unknown_17: None
+  unknown_18: [null, null, null, null]
+  unknown_19: None
+  unknown_2: "Jaybird X3"
+  unknown_20: [null, null, null, null, null, null, null, null, null, null, null, null]
+  unknown_21: None
+  unknown_24: None
+  unknown_254: 0
+  unknown_3: 1
+  unknown_32: None
+  unknown_33: None
+  unknown_34: None
+  unknown_36: None
+  unknown_37: [null, null, null, null, null, null, null]
+  unknown_38: [null, null, null, null, null, null, null]
+  unknown_39: [null, null, null, null, null, null, null]
+  unknown_4: None
+  unknown_40: None
+  unknown_41: [null, null, null, null, null, null, null]
+  unknown_44: None
+  unknown_45: None
+  unknown_46: None
+  unknown_47: None
+  unknown_49: None
+  unknown_5: None
+  unknown_50: [192, 40, 141, 22, 7, 250]
+  unknown_51: 2
+  unknown_52: 22
+  unknown_53: None
+  unknown_6: None
+  unknown_62: None
+  unknown_63: None
+  unknown_64: None
+  unknown_65: None
+  unknown_7: None
+  unknown_73: None
+  unknown_8: None
+  unknown_9: None
+
+--- unknown_327 (mesg_num=327) × 1 ---
+Field keys (8): unknown_0, unknown_1, unknown_2, unknown_253, unknown_3, unknown_4, unknown_5, unknown_6
+Sample 1/1:
+  unknown_0: 9
+  unknown_1: 1
+  unknown_2: 2
+  unknown_253: 1147190191
+  unknown_3: 12
+  unknown_4: 8356
+  unknown_5: 0
+  unknown_6: 0
+

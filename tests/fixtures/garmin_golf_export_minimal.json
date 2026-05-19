@@ -1,0 +1,79 @@
+{
+  "summary": {
+    "scorecardSummaries": [
+      {
+        "id": "999001"
+      }
+    ]
+  },
+  "details": [
+    {
+      "startTime": "2026-01-15T10:00:00Z",
+      "formattedStartTime": "Jan 15, 2026",
+      "scorecardDetails": [
+        {
+          "scorecard": {
+            "id": "999001",
+            "startTime": "2026-01-15T10:00:00+00:00",
+            "courseName": "Fixture Links",
+            "totalScore": 8,
+            "totalPutts": 4,
+            "scoreRelativeToPar": 2,
+            "holes": [
+              {
+                "number": 1,
+                "par": 4,
+                "score": 5,
+                "putts": 2,
+                "yardage": 400
+              },
+              {
+                "number": 2,
+                "par": 4,
+                "score": 3,
+                "putts": 2,
+                "yardage": 380
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "shotDetails": [
+    {
+      "scorecardId": "999001",
+      "holeNumber": 1,
+      "response": {
+        "holeShots": [
+          {
+            "holeNumber": 1,
+            "shots": [
+              {
+                "shotOrder": 1,
+                "meters": 300,
+                "excludeFromStats": false
+              }
+            ]
+          },
+          {
+            "holeNumber": 2,
+            "shots": [
+              {
+                "shotOrder": 1,
+                "meters": 280,
+                "excludeFromStats": false
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "clubs": [],
+  "last10DataStats": {},
+  "last10DataDrive": {},
+  "last10DataApproach": {},
+  "last10DataChip": {},
+  "last10DataPutt": {}
+}

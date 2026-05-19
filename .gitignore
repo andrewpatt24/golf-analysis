@@ -1,0 +1,30 @@
+.DS_Store
+.venv/
+.garth/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+
+# Secrets / credentials — never commit; copy *.example files locally
+/secrets.json
+config/rapsodo-endpoints.json
+data/dashboard_secrets.json
+.env
+.env.*
+
+# Local data: SQLite library, Garmin export, Rapsodo CSV, sync downloads
+data/*
+!data/raw/
+data/raw/*
+!data/raw/garmin/
+!data/raw/garmin/.gitkeep
+!data/raw/rapsodo/
+!data/raw/rapsodo/.gitkeep
+
+.cursor/
+tmp/
+docs/screenshots/
+
+dashboard/node_modules/
+dashboard/dist/

@@ -1,0 +1,6 @@
+/* Minimal global hooks; Material surface + typography come from MUI CssBaseline + theme */
+html,
+body,
+#root {
+  min-height: 100%;
+}

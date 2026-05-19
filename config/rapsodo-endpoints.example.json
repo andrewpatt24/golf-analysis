@@ -1,0 +1,38 @@
+{
+  "session_list_sources": [
+    {
+      "kind": "practice",
+      "url": "https://mlm.rapsodo.com/session/user/list?skip=0&take=200&type=0,%201,%202,%203"
+    },
+    {
+      "kind": "combine",
+      "url": "https://mlm.rapsodo.com/session/user/list?skip=0&take=200&type=4"
+    },
+    {
+      "kind": "closest_to_pin",
+      "url": "https://mlm.rapsodo.com/simulation/sessions?skip=0&take=200&gameType=4"
+    },
+    {
+      "kind": "target_range",
+      "url": "https://mlm.rapsodo.com/simulation/sessions?skip=0&take=200&gameType=2"
+    },
+    {
+      "kind": "range",
+      "url": "https://mlm.rapsodo.com/simulation/sessions?skip=0&take=200&gameType=1"
+    },
+    {
+      "kind": "courses",
+      "url": "https://mlm.rapsodo.com/simulation/sessions?skip=0&take=200&gameType=0,8,9"
+    }
+  ],
+  "authorization_scheme": "JWT",
+  "extra_headers": {
+    "Origin": "https://golf-cloud.rapsodo.com",
+    "Referer": "https://golf-cloud.rapsodo.com/",
+    "os": "web"
+  },
+  "export_csv_url_template": "https://mlm.rapsodo.com/session/{session_id}/details/export",
+  "session_id_keys": ["sessionid", "simulationid", "_id", "id", "sessionId", "session_id", "SessionId"],
+  "list_max_pages": 100,
+  "default_list_take": 200
+}
