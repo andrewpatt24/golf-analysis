@@ -7,11 +7,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from golf_analysis.api.routers import health, meta, performance, plans, rounds, settings, strategy, training
+from golf_analysis.api.access import AccessTokenMiddleware
+from golf_analysis.api.routers import health, meta, on_course, performance, plans, range, reference, rounds, settings, strategy
 
 
 def create_app() -> FastAPI:
     app = FastAPI(title="Golf Analysis API", version="1.0.0")
+    app.add_middleware(AccessTokenMiddleware)
 
     origins_raw = os.environ.get(
         "GOLF_CORS_ORIGINS",
@@ -30,10 +32,12 @@ def create_app() -> FastAPI:
         health.router,
         meta.router,
         rounds.router,
-        training.router,
+        range.router,
         performance.router,
         strategy.router,
+        reference.router,
         settings.router,
+        on_course.router,
         plans.router,
     ):
         app.include_router(r, prefix="/api/v1")

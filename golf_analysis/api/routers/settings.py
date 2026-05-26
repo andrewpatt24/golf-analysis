@@ -14,6 +14,14 @@ class SettingsUpdate(BaseModel):
     maxAgeDays: int | None = Field(None, ge=1, le=3650)
     calendarYear: int | None = Field(None, ge=2000, le=2100)
     trainingBlockSessions: int | None = Field(None, ge=2, le=12)
+    troubleMinAvgStablefordPoints: float | None = Field(None, ge=0, le=4)
+    stablefordColorGreenMin: float | None = Field(None, ge=0, le=4)
+    stablefordColorYellowMin: float | None = Field(None, ge=0, le=4)
+    avgPuttsHighThreshold: float | None = Field(None, ge=0, le=6)
+    trainingDispersionRatioFlag: float | None = Field(
+        None, ge=0.01, le=1.0, description="FLAG when mean |offline|/mean carry exceeds this (default 0.1)"
+    )
+    excludedTrainingClubs: list[str] | None = None
 
 
 @router.get("/settings")
@@ -23,5 +31,4 @@ def get_settings() -> dict[str, object]:
 
 @router.put("/settings")
 def put_settings(body: SettingsUpdate) -> dict[str, object]:
-    updates = {k: v for k, v in body.model_dump().items() if v is not None}
-    return save_settings(updates)
+    return save_settings(body.model_dump(exclude_none=True))

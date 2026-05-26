@@ -158,6 +158,6 @@ Point `GOLF_DASHBOARD_DIST` at `dashboard/dist` when starting uvicorn, or serve 
 |-----|----------------|
 | Strategy | Garmin JSON scorecards + ESZ/DSZ from `shotDetails`; configurable round-by-round line chart (dual axis for % vs counts). |
 | Performance | Round summary from SQLite + Garmin JSON last-10 samples if file present. |
-| Training | Rapsodo LM cohort from SQLite (year from Settings). |
+| Range | Rapsodo LM cohort from SQLite (year from Settings). |
 | Plans | Training block + insights from API (NBLM-style templates + real flags). |
 | Settings | `data/dashboard_settings.json` via API. |

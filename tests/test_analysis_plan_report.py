@@ -9,6 +9,7 @@ from golf_analysis.analysis_plan_report import (
     iter_last10_shots_with_sg,
     scorecard_ids_for_calendar_year,
     scorecard_round_stats,
+    strokes_gained_ratings_from_export,
     summarize_last10_strokes_gained,
 )
 
@@ -30,6 +31,21 @@ def test_iter_last10_shots_with_sg_finds_orientation_rows() -> None:
     assert len(rows) == 3
     cats = {r[0] for r in rows}
     assert cats == {"approach", "around_the_green"}
+
+
+def test_strokes_gained_ratings_from_export() -> None:
+    data = {
+        "last10DataStats": {
+            "strokesGainedRatings": [
+                {"statShotType": "DRIVE", "playerStrokesGained": -0.18, "groupStrokesGained": -0.35},
+                {"statShotType": "PUTT", "playerStrokesGained": None, "groupStrokesGained": -0.01},
+            ]
+        }
+    }
+    rows = strokes_gained_ratings_from_export(data)
+    assert len(rows) == 2
+    assert rows[0]["stat_shot_type"] == "DRIVE"
+    assert rows[0]["player_strokes_gained"] == -0.18
 
 
 def test_summarize_last10_strokes_gained() -> None:

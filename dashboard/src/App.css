@@ -4,3 +4,18 @@ body,
 #root {
   min-height: 100%;
 }
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
+  overscroll-behavior-y: none;
+}
+
+/* Wide tables scroll horizontally on narrow screens */
+.MuiTableContainer-root {
+  -webkit-overflow-scrolling: touch;
+}

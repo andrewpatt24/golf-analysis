@@ -1,0 +1,10 @@
+{
+  "name": "Golf analysis",
+  "short_name": "Golf",
+  "description": "Personal golf strategy, performance, and range dashboard",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fafafa",
+  "theme_color": "#1a73e8",
+  "orientation": "any"
+}

@@ -99,6 +99,59 @@ def summarize_last10_strokes_gained(
     return summary
 
 
+_SG_RATING_LABELS: dict[str, str] = {
+    "DRIVE": "Tee (drive)",
+    "APPROACH": "Approach",
+    "CHIP": "Around the green",
+    "PUTT": "Putting",
+    "BUNKER": "Bunker",
+    "RECOVERY": "Recovery",
+}
+
+
+def strokes_gained_ratings_from_export(data: dict[str, Any]) -> list[dict[str, Any]]:
+    """
+    Headline SG buckets from ``last10DataStats.strokesGainedRatings``.
+
+    Garmin compares your recent window to a similar-handicap cohort (not full round history).
+    """
+
+    stats = data.get("last10DataStats")
+    if not isinstance(stats, dict):
+        return []
+    ratings = stats.get("strokesGainedRatings")
+    if not isinstance(ratings, list):
+        return []
+    out: list[dict[str, Any]] = []
+    for row in ratings:
+        if not isinstance(row, dict):
+            continue
+        shot_type = row.get("statShotType")
+        if shot_type is None:
+            continue
+        key = str(shot_type).strip().upper()
+        try:
+            player_sg = float(row["playerStrokesGained"]) if row.get("playerStrokesGained") is not None else None
+        except (TypeError, ValueError):
+            player_sg = None
+        try:
+            group_sg = float(row["groupStrokesGained"]) if row.get("groupStrokesGained") is not None else None
+        except (TypeError, ValueError):
+            group_sg = None
+        out.append(
+            {
+                "stat_shot_type": key,
+                "label": _SG_RATING_LABELS.get(key, key.title()),
+                "player_strokes_gained": player_sg,
+                "group_strokes_gained": group_sg,
+                "player_rating": row.get("playerRating"),
+                "group_rating": row.get("groupRating"),
+                "trend": row.get("trend"),
+            }
+        )
+    return out
+
+
 def _scorecard_start_year(sc: dict[str, Any]) -> int | None:
     for key in ("startTime", "formattedStartTime", "startTimestamp"):
         v = sc.get(key)

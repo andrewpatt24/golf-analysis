@@ -77,6 +77,12 @@ Open [http://localhost:5173](http://localhost:5173). Vite proxies `/api` to port
 
 For Docker-only UI setup, env vars, and production build notes, see [dashboard/README.md](dashboard/README.md).
 
+### Phone access (Google Cloud)
+
+Push your local SQLite library (+ Garmin JSON + settings) to a private bucket and run one **Cloud Run** URL on your phone. After `gcloud auth login`, run `./scripts/setup-cloud-mobile.sh` or follow [docs/deploy-google-cloud.md](docs/deploy-google-cloud.md).
+
+**On Course prep (new courses):** Woldingham (White tees) in On Course → Course tab; more courses via `manual_courses.py` until GolfAPI ingest — see [docs/new-course-prep-plan.md](docs/new-course-prep-plan.md).
+
 ## CLI overview
 
 | Command | Purpose |

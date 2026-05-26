@@ -40,6 +40,12 @@ def test_settings_roundtrip(client: TestClient) -> None:
     r = client.get("/api/v1/settings")
     assert r.status_code == 200
     assert r.json()["maxRounds"] == 10
+    assert r.json()["troubleMinAvgStablefordPoints"] == 1.0
+    assert r.json()["stablefordColorGreenMin"] == 2.0
+    assert r.json()["stablefordColorYellowMin"] == 1.0
+    assert r.json()["avgPuttsHighThreshold"] == 2.25
+    assert r.json()["trainingDispersionRatioFlag"] == 0.1
+    assert r.json()["excludedTrainingClubs"] == []
     r2 = client.put("/api/v1/settings", json={"maxRounds": 12, "calendarYear": 2026})
     assert r2.status_code == 200
     assert r2.json()["maxRounds"] == 12
@@ -81,7 +87,7 @@ def test_strategy_overview_with_fixture(
     assert esz["dsz_success_holes"] == 1
     assert abs(float(esz["dsz_pct"] or 0) - 50.0) < 0.01
     diag = esz.get("diagnostics") or {}
-    assert diag.get("dsz_basis_scorecard") == 2
+    assert diag.get("dsz_basis_score_minus_tracked_outside") == 2
     assert "data_model" in esz and isinstance(esz["data_model"], dict)
 
 
@@ -97,8 +103,8 @@ def test_performance_garmin_bundle_with_fixture(
     assert j["round_rollups"]["rounds"] == 1
 
 
-def test_training_analytics_takeaways(client: TestClient) -> None:
-    r = client.get("/api/v1/training/analytics?year=2026")
+def test_range_analytics_takeaways(client: TestClient) -> None:
+    r = client.get("/api/v1/range/analytics?year=2026")
     assert r.status_code == 200
     j = r.json()
     assert "takeaways" in j
@@ -106,9 +112,46 @@ def test_training_analytics_takeaways(client: TestClient) -> None:
     assert isinstance(j["shot_shape"], dict)
 
 
-def test_training_club_compare_ok(client: TestClient) -> None:
-    r = client.get("/api/v1/training/club-compare?year=2026&club_a=driver&club_b=3w")
+def test_range_club_compare_ok(client: TestClient) -> None:
+    r = client.get("/api/v1/range/club-compare?year=2026&club_a=driver&club_b=3w")
     assert r.status_code == 200
     j = r.json()
     assert "club_a" in j
     assert j.get("error") is None
+
+
+def test_access_token_required(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    db = tmp_path / "lib.db"
+    conn = connect(db)
+    init_schema(conn)
+    conn.close()
+    monkeypatch.setenv("GOLF_ACCESS_TOKEN", "secret-token")
+    monkeypatch.setenv("GOLF_LIBRARY_DB", str(db))
+    monkeypatch.setenv("GOLF_DASHBOARD_SETTINGS", str(tmp_path / "settings.json"))
+    app = create_app()
+    client = TestClient(app)
+
+    assert client.get("/api/v1/health").status_code == 200
+    assert client.get("/api/v1/meta").status_code == 401
+    assert client.get("/api/v1/meta?token=secret-token").status_code == 200
+    assert (
+        client.get("/api/v1/meta", headers={"Authorization": "Bearer secret-token"}).status_code
+        == 200
+    )
+    assert client.get("/assets/app.js").status_code != 401
+
+
+def test_access_token_cookie(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    db = tmp_path / "lib.db"
+    conn = connect(db)
+    init_schema(conn)
+    conn.close()
+    monkeypatch.setenv("GOLF_ACCESS_TOKEN", "secret-token")
+    monkeypatch.setenv("GOLF_LIBRARY_DB", str(db))
+    monkeypatch.setenv("GOLF_DASHBOARD_SETTINGS", str(tmp_path / "settings.json"))
+    client = TestClient(create_app())
+
+    r = client.get("/api/v1/meta?token=secret-token")
+    assert r.status_code == 200
+    assert client.cookies.get("golf_access_token") == "secret-token"
+    assert client.get("/api/v1/meta").status_code == 200

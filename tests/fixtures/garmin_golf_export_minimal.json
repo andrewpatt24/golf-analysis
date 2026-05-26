@@ -24,6 +24,7 @@
                 "number": 1,
                 "par": 4,
                 "score": 5,
+                "typeScore": 0,
                 "putts": 2,
                 "yardage": 400
               },
@@ -31,6 +32,7 @@
                 "number": 2,
                 "par": 4,
                 "score": 3,
+                "typeScore": 2,
                 "putts": 2,
                 "yardage": 380
               }

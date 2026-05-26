@@ -164,7 +164,7 @@ flowchart LR
 - [ ] Rapsodo: optimal-window checks (framework + [rapsado-metrics.md](./rapsado-metrics.md)).
 - [ ] Prioritizer + training block template engine (`sessions_in_block`).
 - [x] Plans API returning `{ insights[], sessions[] }` (initial).
-- [x] Dashboard UI tabs: Strategy, Performance, Training, Plans, Settings; data wired to routes above.
+- [x] Dashboard UI tabs: Strategy, Performance, Range, Plans, Settings; data wired to routes above.
 
 When this checklist is complete, the dashboard matches this plan end-to-end for the NBLM-aligned loop.
 
@@ -174,7 +174,7 @@ When this checklist is complete, the dashboard matches this plan end-to-end for 
 
 Reference screenshots: `tmp/screenshots/` (PNG captures; gitignored; IDE/workspace search may not index binaries—use Finder or `ls` to confirm). Use them for Garmin Connect / Rapsodo Session Insights parity.
 
-| User-facing area (from `docs/feature-list.md`) | Strategy | Performance | Training |
+| User-facing area (from `docs/feature-list.md`) | Strategy | Performance | Range |
 |-------------------------------------------------|----------|-------------|----------|
 | **The Scoring Method** — ESZ / DSZ story, penalties, blow-ups, tee-line proxy, putting load | **Yes** — `GET /api/v1/strategy/overview` → `scoring_method` (proxies + caveats; true ESZ/DSZ need shot geometry per [scoring-method.md](./scoring-method.md)) | Supporting context in Garmin SG | Practice card tie-in via Training insights (future) |
 | Garmin rounds overview, scorecard list / drill-down rows | **Yes** — `scorecards[]` from export (year filter) | **Yes** — same export via `garmin-bundle` rollups | — |
@@ -183,21 +183,21 @@ Reference screenshots: `tmp/screenshots/` (PNG captures; gitignored; IDE/workspa
 | SG vs similar handicap (last-10 samples) | — | **Yes** — `last10` in `GET /api/v1/performance/garmin-bundle` | — |
 | Course / window stats (mean strokes, best, score types) | Short summary from `performance` in overview (optional) | **Yes** — `round_rollups` in `garmin-bundle` + `GET /api/v1/rounds/summary` | — |
 | Shot maps, per-course trouble holes | Planned (needs `round_shots` / geometry) | Planned | — |
-| Rapsodo shot list with stats | — | — | **Yes** — `GET /api/v1/training/shots` |
-| Dispersion / carry distribution (p10–p90), dispersion index | — | — | **Yes** — `GET /api/v1/training/analytics` → `carry_distribution` |
+| Rapsodo shot list with stats | — | — | **Yes** — `GET /api/v1/range/shots` |
+| Dispersion / carry distribution (p10–p90), dispersion index | — | — | **Yes** — `GET /api/v1/range/analytics` → `carry_distribution` |
 | Club gapping | — | — | **Yes** — `gapping` |
 | Landing side (L / straight / R) | — | — | **Yes** — `landing_side` |
 | Shot shape frequency | — | — | **Yes** — `shot_shape`: offline three-way + **spin-axis five-way** (hook/draw/straight/fade/slice) when ≥15 axis samples |
-| Club comparison / multi-club overlays | — | — | **Yes** — `GET /api/v1/training/club-compare` (two clubs: lateral %, mean carry by miss, launch/smash) + scatter |
-| Key takeaways | — | — | **Yes** — `takeaways[]` on `GET /api/v1/training/analytics` + first lines on `GET /api/v1/plans/training-block` |
+| Club comparison / multi-club overlays | — | — | **Yes** — `GET /api/v1/range/club-compare` (two clubs: lateral %, mean carry by miss, launch/smash) + scatter |
+| Key takeaways | — | — | **Yes** — `takeaways[]` on `GET /api/v1/range/analytics` + first lines on `GET /api/v1/plans/training-block` |
 | Dispersion vs handicap band | — | — | Needs benchmark config (planned) |
 
 ### Implemented API routes (dashboard)
 
 - `GET /api/v1/strategy/overview` — Garmin JSON + scoring-method proxies + scorecards.
 - `GET /api/v1/performance/garmin-bundle` — round rollups + last-10 SG for the year.
-- `GET /api/v1/training/analytics` — carry distribution, landing side, gapping, shot-shape (offline + spin-axis five-way), **takeaways**.
-- `GET /api/v1/training/club-compare` — two-club Session Insights–style table.
-- `GET /api/v1/training/shots` — recent shots for drill-down.
+- `GET /api/v1/range/analytics` — carry distribution, landing side, gapping, shot-shape (offline + spin-axis five-way), **takeaways**.
+- `GET /api/v1/range/club-compare` — two-club Session Insights–style table.
+- `GET /api/v1/range/shots` — recent shots for drill-down.
 
-Existing: `GET /api/v1/training/clubs`, `scatter`, `sessions`; `GET /api/v1/performance/garmin-samples`; `GET /api/v1/rounds`, `rounds/summary`.
+Existing: `GET /api/v1/range/clubs`, `scatter`, `sessions`; `GET /api/v1/performance/garmin-samples`; `GET /api/v1/rounds`, `rounds/summary`.

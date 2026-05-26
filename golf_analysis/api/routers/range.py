@@ -6,7 +6,12 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, Query
 
 from golf_analysis.api.deps import repo_root_from_db, require_db_exists
-from golf_analysis.api.training_data import club_training_rows, training_scatter_points
+from golf_analysis.api.training_data import (
+    club_training_rows,
+    list_training_clubs_catalog,
+    training_dispersion_settings,
+    training_scatter_points,
+)
 from golf_analysis.range_analysis import lm_shot_cohort_sql
 from golf_analysis.range_shot_analytics import (
     build_training_takeaways,
@@ -20,15 +25,31 @@ from golf_analysis.range_shot_analytics import (
 from golf_analysis.repository import connect, init_schema
 from golf_analysis.rapsodo_list_kinds import load_session_ids_for_calendar_year
 
-router = APIRouter(tags=["training"])
+router = APIRouter(tags=["range"])
 
 
 def _year_param(year: int | None) -> int | None:
     return year
 
 
+@router.get("/range/clubs-catalog")
+@router.get("/training/clubs-catalog")
+def range_clubs_catalog(db: Path = Depends(require_db_exists)) -> dict[str, object]:
+    """All clubs in the library (for Settings exclusions and compare pickers)."""
+
+    conn = connect(db)
+    init_schema(conn)
+    try:
+        clubs = list_training_clubs_catalog(conn)
+        _, excluded = training_dispersion_settings()
+        return {"clubs": clubs, "excluded": sorted(excluded)}
+    finally:
+        conn.close()
+
+
+@router.get("/range/clubs")
 @router.get("/training/clubs")
-def training_clubs(
+def range_clubs(
     db: Path = Depends(require_db_exists),
     year: int | None = Query(None, description="Calendar year filter; omit for all years"),
 ) -> list[dict[str, object]]:
@@ -40,8 +61,9 @@ def training_clubs(
         conn.close()
 
 
+@router.get("/range/scatter")
 @router.get("/training/scatter")
-def training_scatter(
+def range_scatter(
     db: Path = Depends(require_db_exists),
     year: int | None = Query(None),
     club: Annotated[list[str] | None, Query()] = None,
@@ -63,8 +85,9 @@ def training_scatter(
         conn.close()
 
 
+@router.get("/range/sessions")
 @router.get("/training/sessions")
-def training_sessions(
+def range_sessions(
     db: Path = Depends(require_db_exists),
     year: int | None = Query(None),
     limit: int = Query(30, ge=1, le=100),
@@ -112,8 +135,9 @@ def training_sessions(
     ]
 
 
+@router.get("/range/analytics")
 @router.get("/training/analytics")
-def training_analytics(
+def range_analytics(
     db: Path = Depends(require_db_exists),
     year: int | None = Query(None),
 ) -> dict[str, object]:
@@ -144,8 +168,9 @@ def training_analytics(
         conn.close()
 
 
+@router.get("/range/club-compare")
 @router.get("/training/club-compare")
-def training_club_compare(
+def range_club_compare(
     db: Path = Depends(require_db_exists),
     year: int | None = Query(None),
     club_a: str = Query(..., min_length=1, description="First club (matches lower(trim) in DB)"),
@@ -167,8 +192,9 @@ def training_club_compare(
         conn.close()
 
 
+@router.get("/range/shots")
 @router.get("/training/shots")
-def training_shots(
+def range_shots(
     db: Path = Depends(require_db_exists),
     year: int | None = Query(None),
     club: str | None = Query(None),

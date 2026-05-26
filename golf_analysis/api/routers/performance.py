@@ -6,6 +6,7 @@ from fastapi import APIRouter, Query
 
 from golf_analysis.analysis_plan_report import (
     scorecard_ids_for_calendar_year,
+    strokes_gained_ratings_from_export,
     summarize_last10_strokes_gained,
 )
 from golf_analysis.api.deps import garmin_export_path
@@ -43,6 +44,7 @@ def garmin_last10_samples(
         "source": str(path),
         "year_filter": year,
         "summary": summary,
+        "sg_ratings": strokes_gained_ratings_from_export(data),
     }
 
 
@@ -63,6 +65,7 @@ def garmin_performance_bundle(
             "year": y,
             "round_rollups": performance_round_rollups([]),
             "last10": {},
+            "sg_ratings": [],
         }
     cards = iter_scorecards(data, calendar_year=y, limit=limit)
     sc_ids = scorecard_ids_for_calendar_year(data, y)
@@ -73,5 +76,6 @@ def garmin_performance_bundle(
         "year": y,
         "round_rollups": performance_round_rollups(cards),
         "last10": last10,
+        "sg_ratings": strokes_gained_ratings_from_export(data),
         "rounds_in_bundle": len(cards),
     }

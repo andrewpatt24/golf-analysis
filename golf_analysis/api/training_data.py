@@ -6,6 +6,42 @@ from typing import Any
 
 from golf_analysis.analysis_plan_report import dispersion_by_club, range_shot_rows_for_dispersion
 from golf_analysis.api.deps import repo_root_from_db
+from golf_analysis.api.settings_store import load_settings
+from golf_analysis.range_analysis import lm_shot_cohort_sql
+
+
+def training_dispersion_settings() -> tuple[float, set[str]]:
+    """(ratio FLAG threshold, excluded club labels lowercased)."""
+
+    cfg = load_settings()
+    try:
+        threshold = float(cfg.get("trainingDispersionRatioFlag", 0.1))
+    except (TypeError, ValueError):
+        threshold = 0.1
+    excluded_raw = cfg.get("excludedTrainingClubs")
+    excluded: set[str] = set()
+    if isinstance(excluded_raw, list):
+        excluded = {str(c).strip().lower() for c in excluded_raw if str(c).strip()}
+    return threshold, excluded
+
+
+def list_training_clubs_catalog(conn: sqlite3.Connection) -> list[dict[str, Any]]:
+    """All clubs in the LM cohort (all years), with shot counts."""
+
+    cohort = lm_shot_cohort_sql()
+    sql = f"""
+        SELECT lower(trim(rs.club)) AS club, COUNT(*) AS n
+        FROM range_shots rs
+        JOIN range_sessions s ON s.id = rs.session_id
+        JOIN imports i ON i.id = s.import_id
+        WHERE {cohort}
+          AND rs.club IS NOT NULL AND TRIM(rs.club) != ''
+          AND rs.carry_yards IS NOT NULL
+        GROUP BY 1
+        HAVING club IS NOT NULL AND club != ''
+        ORDER BY n DESC, club ASC
+    """
+    return [{"club": str(r[0]), "n": int(r[1])} for r in conn.execute(sql).fetchall()]
 
 
 def club_training_rows(
@@ -16,7 +52,7 @@ def club_training_rows(
 ) -> list[dict[str, Any]]:
     repo = repo_root_from_db(db_path)
     rows = range_shot_rows_for_dispersion(conn, calendar_year=calendar_year, repo_root=repo)
-    from golf_analysis.range_analysis import lm_shot_cohort_sql
+    ratio_threshold, excluded = training_dispersion_settings()
 
     cohort = lm_shot_cohort_sql()
     year_sql = ""
@@ -53,14 +89,18 @@ def club_training_rows(
 
     out: list[dict[str, Any]] = []
     for row in dispersion_by_club(rows):
+        club = row["club"]
+        if club in excluded:
+            continue
         mean_c = row["mean_carry_yards"]
-        mean_abs = mean_abs_by_club.get(row["club"])
+        mean_abs = mean_abs_by_club.get(club)
         ratio_mean = None
         if mean_c and mean_abs is not None:
             ratio_mean = mean_abs / float(mean_c)
+        needs_work = ratio_mean is not None and ratio_mean > ratio_threshold
         out.append(
             {
-                "club": row["club"],
+                "club": club,
                 "n": row["n"],
                 "mean_carry_yards": mean_c,
                 "mean_total_yards": None,
@@ -72,9 +112,17 @@ def club_training_rows(
                 "median_path_deg": row["median_path_deg"],
                 "median_launch_dir_deg": row["median_launch_dir_deg"],
                 "median_smash": row["median_smash"],
-                "needs_work": row["needs_work"],
+                "needs_work": needs_work,
             }
         )
+    out.sort(
+        key=lambda r: (
+            r["mean_carry_yards"] is None,
+            -(float(r["mean_carry_yards"]) if r["mean_carry_yards"] is not None else 0.0),
+            -int(r["n"]),
+            str(r["club"]),
+        )
+    )
     return out
 
 

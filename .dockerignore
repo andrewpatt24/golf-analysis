@@ -1,0 +1,16 @@
+.git
+.venv
+__pycache__
+*.pyc
+.pytest_cache
+.ruff_cache
+data/raw
+data/library.db
+data/dashboard_settings.json
+dashboard/node_modules
+dashboard/dist
+agent-transcripts
+.mcps
+*.zip
+secrets.json
+config/rapsodo-endpoints.json

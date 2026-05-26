@@ -1,4 +1,4 @@
-"""Rapsodo / range_shots analytics for dashboard (training tab)."""
+"""Rapsodo / range_shots analytics for dashboard (Range tab)."""
 
 from __future__ import annotations
 
