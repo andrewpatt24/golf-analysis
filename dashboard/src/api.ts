@@ -32,12 +32,67 @@ export async function apiGet<T>(path: string): Promise<T> {
   return res.json() as Promise<T>;
 }
 
+export async function apiPatch<T>(path: string, body: unknown): Promise<T> {
+  const url = apiUrl(path);
+  const res = await fetch(url, {
+    method: "PATCH",
+    headers: apiAuthHeaders(true),
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) {
+    const t = await res.text();
+    throw new Error(t || res.statusText);
+  }
+  return res.json() as Promise<T>;
+}
+
+export async function apiDelete<T>(path: string): Promise<T> {
+  const url = apiUrl(path);
+  const res = await fetch(url, {
+    method: "DELETE",
+    headers: apiAuthHeaders(),
+  });
+  if (!res.ok) {
+    const t = await res.text();
+    throw new Error(t || res.statusText);
+  }
+  return res.json() as Promise<T>;
+}
+
 export async function apiPut<T>(path: string, body: unknown): Promise<T> {
   const url = apiUrl(path);
   const res = await fetch(url, {
     method: "PUT",
     headers: apiAuthHeaders(true),
     body: JSON.stringify(body),
+  });
+  if (!res.ok) {
+    const t = await res.text();
+    throw new Error(t || res.statusText);
+  }
+  return res.json() as Promise<T>;
+}
+
+export async function apiPost<T>(path: string, body?: unknown): Promise<T> {
+  const url = apiUrl(path);
+  const res = await fetch(url, {
+    method: "POST",
+    headers: apiAuthHeaders(body !== undefined),
+    body: body !== undefined ? JSON.stringify(body) : undefined,
+  });
+  if (!res.ok) {
+    const t = await res.text();
+    throw new Error(t || res.statusText);
+  }
+  return res.json() as Promise<T>;
+}
+
+export async function apiPostForm<T>(path: string, form: FormData): Promise<T> {
+  const url = apiUrl(path);
+  const res = await fetch(url, {
+    method: "POST",
+    headers: apiAuthHeaders(false),
+    body: form,
   });
   if (!res.ok) {
     const t = await res.text();

@@ -1,0 +1,466 @@
+[
+  {
+    "id": "gate_drill",
+    "title": "The Gate Drill",
+    "description": "Set two tees just wider than your ball halfway between your ball and the hole. Tiger Woods famously practiced this from about four feet to groove his stroke path. Miss the gate or miss the putt and it doesn't count.",
+    "equipment_needed": [
+      "1 ball",
+      "2 tees"
+    ],
+    "distances": [
+      "4 feet",
+      "8 feet"
+    ],
+    "attempts_per_distance": 10,
+    "is_timed": false,
+    "tracking_type": "score_out_of_total",
+    "tracking_metrics": [
+      "Putts Made Through Gate",
+      "Total Attempts"
+    ],
+    "penalty_reset_rule": null,
+    "success_target": "8 out of 10 putts made through the gate",
+    "expected_duration_minutes": 15
+  },
+  {
+    "id": "clock_drill_circle_8",
+    "title": "The Clock Drill / Circle 8",
+    "description": "Place 8 to 12 balls in a circle around the hole. Moving clockwise, you must make all putts in a row.",
+    "equipment_needed": [
+      "8-12 balls",
+      "8-12 tees"
+    ],
+    "distances": [
+      "3 feet"
+    ],
+    "attempts_per_distance": 1,
+    "is_timed": false,
+    "tracking_type": "boolean_completion",
+    "tracking_metrics": [
+      "Completed Without Reset (Yes/No)"
+    ],
+    "penalty_reset_rule": "If you miss one putt, you must start over from ball one.",
+    "success_target": "Complete the entire circle without a restart",
+    "expected_duration_minutes": 20
+  },
+  {
+    "id": "lag_putting_knockout",
+    "title": "Lag Putting Knockout",
+    "description": "Set up at 30, 40, and 50 feet, hitting three putts from each distance. Score 1 point for every putt that finishes within 3 feet of the hole, and score 0 for anything outside.",
+    "equipment_needed": [
+      "3 balls"
+    ],
+    "distances": [
+      "30 feet",
+      "40 feet",
+      "50 feet"
+    ],
+    "attempts_per_distance": 3,
+    "is_timed": false,
+    "tracking_type": "points_based",
+    "tracking_metrics": [
+      "Total Points (Max 9)"
+    ],
+    "penalty_reset_rule": "Miss the 3-foot circle three times in a row from any distance and you are knocked out (session over).",
+    "success_target": "Score 7+ out of 9 points",
+    "expected_duration_minutes": 15
+  },
+  {
+    "id": "streak_builder",
+    "title": "The Streak Builder",
+    "description": "Pick a distance and make consecutive putts. Your score is your longest streak per session.",
+    "equipment_needed": [
+      "1 ball"
+    ],
+    "distances": [
+      "4 feet",
+      "5 feet"
+    ],
+    "attempts_per_distance": null,
+    "is_timed": false,
+    "tracking_type": "streak",
+    "tracking_metrics": [
+      "Longest Streak"
+    ],
+    "penalty_reset_rule": "Miss and the streak resets to zero.",
+    "success_target": "A streak of 10 consecutive makes from 4 feet",
+    "expected_duration_minutes": 15
+  },
+  {
+    "id": "one_handed_putts",
+    "title": "One-Handed Putts",
+    "description": "Putt with your right hand only to feel the putter head and develop delicate touch. Focus on stroke path and impact quality rather than making putts.",
+    "equipment_needed": [
+      "1 ball"
+    ],
+    "distances": [
+      "3 to 5 feet"
+    ],
+    "attempts_per_distance": 10,
+    "is_timed": false,
+    "tracking_type": "score_out_of_total",
+    "tracking_metrics": [
+      "Solid Strikes",
+      "Total Attempts"
+    ],
+    "penalty_reset_rule": null,
+    "success_target": "8 out of 10 solid strikes",
+    "expected_duration_minutes": 10
+  },
+  {
+    "id": "drill_3_6_9",
+    "title": "The 3-6-9 Drill",
+    "description": "Place a tee at 3 feet, 6 feet, and 9 feet in a straight line from the hole. You have to make 3 putts in a row from all three tee locations.",
+    "equipment_needed": [
+      "3 balls",
+      "3 tees"
+    ],
+    "distances": [
+      "3 feet",
+      "6 feet",
+      "9 feet"
+    ],
+    "attempts_per_distance": 3,
+    "is_timed": false,
+    "tracking_type": "boolean_completion",
+    "tracking_metrics": [
+      "Completed Drill (Yes/No)"
+    ],
+    "penalty_reset_rule": "If you miss any putt, even the 9th putt in the drill, you have to start over at the beginning.",
+    "success_target": "Complete all 9 putts in succession",
+    "expected_duration_minutes": 20
+  },
+  {
+    "id": "ladder_drill",
+    "title": "The Ladder Drill",
+    "description": "Place a ball at 3 feet, 6 feet, 9 feet, 12 feet, and 15 feet in a straight line. Start at 3 feet, and if you make it, move to 6 feet. Your goal is to climb the full ladder.",
+    "equipment_needed": [
+      "5 balls"
+    ],
+    "distances": [
+      "3 ft",
+      "6 ft",
+      "9 ft",
+      "12 ft",
+      "15 ft"
+    ],
+    "attempts_per_distance": 1,
+    "is_timed": false,
+    "tracking_type": "total_attempts",
+    "tracking_metrics": [
+      "Total Attempts to Clear Ladder"
+    ],
+    "penalty_reset_rule": "Miss at any distance and you must go back one rung on the ladder.",
+    "success_target": "Complete the full ladder in under 10 attempts",
+    "expected_duration_minutes": 15
+  },
+  {
+    "id": "speed_ladder",
+    "title": "Speed Ladder",
+    "description": "Place two tees approximately 18-20 feet apart on a flat spot. Roll the first putt towards the second tee, and every subsequent putt must come to rest shorter than the previous ball without rolling past it. You must fit all 10 balls between the tees.",
+    "equipment_needed": [
+      "10 balls",
+      "2 tees"
+    ],
+    "distances": [
+      "18-20 feet window"
+    ],
+    "attempts_per_distance": 10,
+    "is_timed": false,
+    "tracking_type": "boolean_completion",
+    "tracking_metrics": [
+      "Completed Drill (Yes/No)"
+    ],
+    "penalty_reset_rule": "If you roll a ball past the previous ball, you must gather all balls and start over.",
+    "success_target": "Fit all 10 balls in succession between the tees",
+    "expected_duration_minutes": 15
+  },
+  {
+    "id": "six_foot_test",
+    "title": "The 6-Foot Test",
+    "description": "Make putts from 6 feet to practice the scoring zone. This distance determines if you convert birdie chances and save pars.",
+    "equipment_needed": [
+      "1 ball"
+    ],
+    "distances": [
+      "6 feet"
+    ],
+    "attempts_per_distance": 10,
+    "is_timed": false,
+    "tracking_type": "score_out_of_total",
+    "tracking_metrics": [
+      "Putts Made",
+      "Total Attempts"
+    ],
+    "penalty_reset_rule": null,
+    "success_target": "Make 6 out of 10 putts",
+    "expected_duration_minutes": 10
+  },
+  {
+    "id": "lag_it_drill",
+    "title": "The Lag-It Drill",
+    "description": "Lay a club about 18 inches directly behind the hole, perpendicular to the line of the putt. Hit putts trying to get the ball past the hole, but without hitting the club.",
+    "equipment_needed": [
+      "1 ball",
+      "1 golf club"
+    ],
+    "distances": [
+      "10 ft",
+      "20 ft",
+      "30 ft",
+      "40 ft",
+      "50 ft"
+    ],
+    "attempts_per_distance": 1,
+    "is_timed": false,
+    "tracking_type": "points_based",
+    "tracking_metrics": [
+      "Total Points (Max 10)"
+    ],
+    "penalty_reset_rule": null,
+    "success_target": "Score a high point total based on: 1 pt for stopping past the hole but before the club, 2 pts for a made putt, 0 pts for stopping short or hitting the club.",
+    "expected_duration_minutes": 15
+  },
+  {
+    "id": "par_18_putting",
+    "title": "Par 18 / 9-Hole Match",
+    "description": "Pick nine spots around the practice green of varying distances and angles. Treat each hole as a par 2, and play the 9 holes keeping score.",
+    "equipment_needed": [
+      "1 ball",
+      "Ball marker"
+    ],
+    "distances": [
+      "Varying"
+    ],
+    "attempts_per_distance": 1,
+    "is_timed": false,
+    "tracking_type": "points_based",
+    "tracking_metrics": [
+      "Total Stroke Score"
+    ],
+    "penalty_reset_rule": null,
+    "success_target": "Shoot a score of 18 or lower, with an elite target of 14 or under",
+    "expected_duration_minutes": 25
+  },
+  {
+    "id": "putt_25_in_a_row_3ft",
+    "category": "putting",
+    "title": "25 in a row from 3'",
+    "description": "Place 6 tee pegs around one hole at a 3-foot distance. Work your way around the circle until you hole 25 putts in a row. If you miss one, you must start again. Then start going the opposite direction.",
+    "equipment_needed": [
+      "Balls",
+      "6 tees"
+    ],
+    "distances": [
+      "3 feet"
+    ],
+    "attempts_per_distance": null,
+    "is_timed": false,
+    "tracking_type": "streak",
+    "tracking_metrics": [
+      "Longest Streak"
+    ],
+    "penalty_reset_rule": "Miss a putt and the streak resets to zero.",
+    "success_target": "Make 25 consecutive putts",
+    "expected_duration_minutes": 20
+  },
+  {
+    "id": "putt_20_in_a_row_20ft_lag",
+    "category": "putting",
+    "title": "20 in a row from 20 feet stopping in a 3 foot circle",
+    "description": "Mark a 3-foot circle around the hole using tees, leaving a small gap for balls to enter. Hit lag putts from 20 feet. Only use 3 balls so they don't knock into each other in the circle. The goal is to get 20 in a row inside the circle.",
+    "equipment_needed": [
+      "3 balls",
+      "Tees to mark circle"
+    ],
+    "distances": [
+      "20 feet"
+    ],
+    "attempts_per_distance": null,
+    "is_timed": false,
+    "tracking_type": "streak",
+    "tracking_metrics": [
+      "Longest Streak"
+    ],
+    "penalty_reset_rule": "If a ball stops outside the 3-foot circle, the streak resets to zero.",
+    "success_target": "20 consecutive putts inside the circle",
+    "expected_duration_minutes": 25
+  },
+  {
+    "id": "putt_20_in_a_row_30ft_lag",
+    "category": "putting",
+    "title": "20 in a row from 30 feet stopping in a 3 foot circle",
+    "description": "Mark a 3-foot circle around the hole. Using exactly 3 balls to prevent collisions, hit lag putts from 30 feet. Your goal is 20 in a row inside the safe zone.",
+    "equipment_needed": [
+      "3 balls",
+      "Tees to mark circle"
+    ],
+    "distances": [
+      "30 feet"
+    ],
+    "attempts_per_distance": null,
+    "is_timed": false,
+    "tracking_type": "streak",
+    "tracking_metrics": [
+      "Longest Streak"
+    ],
+    "penalty_reset_rule": "If a ball stops outside the 3-foot circle, the streak resets to zero.",
+    "success_target": "20 consecutive putts inside the circle",
+    "expected_duration_minutes": 30
+  },
+  {
+    "id": "putt_20_in_a_row_45ft_lag",
+    "category": "putting",
+    "title": "20 in a row from 45 feet stopping in a 3 foot circle",
+    "description": "Mark a 3-foot circle around the hole. Using exactly 3 balls, hit lag putts from 45 feet. Your goal is 20 in a row inside the circle.",
+    "equipment_needed": [
+      "3 balls",
+      "Tees to mark circle"
+    ],
+    "distances": [
+      "45 feet"
+    ],
+    "attempts_per_distance": null,
+    "is_timed": false,
+    "tracking_type": "streak",
+    "tracking_metrics": [
+      "Longest Streak"
+    ],
+    "penalty_reset_rule": "If a ball stops outside the 3-foot circle, the streak resets to zero.",
+    "success_target": "20 consecutive putts inside the circle",
+    "expected_duration_minutes": 35
+  },
+  {
+    "id": "putt_killer",
+    "category": "putting",
+    "title": "Killer",
+    "description": "Put tee pegs in a straight line starting at 3 feet from the hole, and at 1-foot intervals out to 10 feet. You have 3 'lives' (3 balls). Start at 3 feet. Hole a putt, and move back to the next tee. If you miss, you lose a life and stay on that tee until you hole one.",
+    "equipment_needed": [
+      "3 balls",
+      "8 tees"
+    ],
+    "distances": [
+      "3 ft to 10 ft"
+    ],
+    "attempts_per_distance": null,
+    "is_timed": false,
+    "tracking_type": "boolean_completion",
+    "tracking_metrics": [
+      "Completed Drill (Yes/No)",
+      "Lives Remaining"
+    ],
+    "penalty_reset_rule": "Miss a putt, lose a life. Run out of all 3 lives and the game is over.",
+    "success_target": "Hole the final 10-foot putt without losing all 3 lives",
+    "expected_duration_minutes": 15
+  },
+  {
+    "id": "putt_overtake_game",
+    "category": "putting",
+    "title": "Overtake game",
+    "description": "Place a starting tee. Take 2 decent-sized steps forward and place a second tee, then 3 strides forward to place a third tee. The first putt must pass the first tee but stop before the second. Each subsequent putt must overtake the previous ball without passing the final tee. 1 point for a successful overtake, minus 1 point if short. Game over if a ball passes the final tee.",
+    "equipment_needed": [
+      "Balls",
+      "3 tees"
+    ],
+    "distances": [
+      "Varying window"
+    ],
+    "attempts_per_distance": null,
+    "is_timed": false,
+    "tracking_type": "points_based",
+    "tracking_metrics": [
+      "Total Points Score"
+    ],
+    "penalty_reset_rule": "Game over if any putt rolls past the final tee.",
+    "success_target": "Score 10 points",
+    "expected_duration_minutes": 15
+  },
+  {
+    "id": "putt_3_foot_compass",
+    "category": "putting",
+    "title": "3-foot compass",
+    "description": "Hit a 3-foot putt from the four opposite sides of the hole (downhill, uphill, left-to-right, right-to-left). If your practice green has 9 holes, do this once on each of the 9 holes for 36 total putts.",
+    "equipment_needed": [
+      "4 balls"
+    ],
+    "distances": [
+      "3 feet"
+    ],
+    "attempts_per_distance": 36,
+    "is_timed": false,
+    "tracking_type": "score_out_of_total",
+    "tracking_metrics": [
+      "Putts Made",
+      "Total Attempts"
+    ],
+    "penalty_reset_rule": null,
+    "success_target": "Make 36 out of 36",
+    "expected_duration_minutes": 30
+  },
+  {
+    "id": "putt_6_foot_compass",
+    "category": "putting",
+    "title": "6-foot compass",
+    "description": "Hit a 6-foot putt from the four opposite sides of the hole (downhill, uphill, left-to-right, right-to-left). Repeat this on 9 holes of the practice green for a total of 36 putts.",
+    "equipment_needed": [
+      "4 balls"
+    ],
+    "distances": [
+      "6 feet"
+    ],
+    "attempts_per_distance": 36,
+    "is_timed": false,
+    "tracking_type": "score_out_of_total",
+    "tracking_metrics": [
+      "Putts Made",
+      "Total Attempts"
+    ],
+    "penalty_reset_rule": null,
+    "success_target": "Make 25 out of 36 (PGA Tour Average is 17.59% from 6 feet)",
+    "expected_duration_minutes": 30
+  },
+  {
+    "id": "putt_20_tee_game",
+    "category": "putting",
+    "title": "20 tee game",
+    "description": "Find a hole with room around it. Set out 20 tees at 1-foot intervals starting 3 feet from the hole on 4 diagonals (downhill L-R, downhill R-L, uphill L-R, uphill R-L). Take each tee peg out once you hole a putt from that spot. Keep a running count of total putts hit (both makes and misses).",
+    "equipment_needed": [
+      "1 ball",
+      "20 tees"
+    ],
+    "distances": [
+      "3 to 7 feet"
+    ],
+    "attempts_per_distance": null,
+    "is_timed": false,
+    "tracking_type": "total_attempts",
+    "tracking_metrics": [
+      "Total Putts Taken to Clear 20 Tees"
+    ],
+    "penalty_reset_rule": null,
+    "success_target": "Clear all tees in as few total putts as possible (Perfect score is 20)",
+    "expected_duration_minutes": 25
+  },
+  {
+    "id": "putt_10_foot_game",
+    "category": "putting",
+    "title": "10-foot putt challenge",
+    "description": "Place a tee peg 10 feet from the hole. The goal is to reach 10 points as quickly as you can. You get 2 points for holing a putt, but you lose 1 point anytime you leave a putt short or 3-putt. Keep track of the total number of putts it takes you to reach 10 points.",
+    "equipment_needed": [
+      "1 ball",
+      "1 tee"
+    ],
+    "distances": [
+      "10 feet"
+    ],
+    "attempts_per_distance": null,
+    "is_timed": false,
+    "tracking_type": "total_attempts",
+    "tracking_metrics": [
+      "Total Putts Taken to Reach 10 Points"
+    ],
+    "penalty_reset_rule": null,
+    "success_target": "5 putts (Perfect score: holing the first 5 putts)",
+    "expected_duration_minutes": 15
+  }
+]

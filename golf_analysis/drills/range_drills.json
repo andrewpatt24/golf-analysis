@@ -1,0 +1,198 @@
+[
+  {
+    "id": "range_dispersion",
+    "category": "range",
+    "title": "Range — dispersion practice",
+    "description": "Use Rapsodo **Range** simulation mode (gameType range). Pick one club and a target line; hit ~40–50 balls focusing on offline consistency. Review the dispersion plot after the session — this is the primary mode for tightening driver, fairway wood, and hybrid patterns.",
+    "equipment_needed": [
+      "Rapsodo MLM",
+      "Range balls (~50)"
+    ],
+    "distances": [
+      "Full swings — one club per session"
+    ],
+    "attempts_per_distance": null,
+    "is_timed": true,
+    "tracking_type": "club_focus_session",
+    "tracking_metrics": [
+      "Club focus",
+      "Session aim",
+      "Completed"
+    ],
+    "penalty_reset_rule": null,
+    "success_target": "Complete session with tighter offline than recent baseline for that club",
+    "expected_duration_minutes": 45,
+    "rapsodo_mode": "range",
+    "rapsodo_mode_label": "Rapsodo Range (dispersion)",
+    "default_aim": "Pick a target line; keep the majority of shots inside a 20-yard offline window (adjust for club).",
+    "suggested_clubs": [
+      "driver",
+      "5w",
+      "3h"
+    ]
+  },
+  {
+    "id": "range_direction_window",
+    "category": "range",
+    "title": "Practice — direction window",
+    "description": "Use Rapsodo **Practice** mode (free LM session). Direction game: pick one club and a start line; only count shots that finish inside a narrow left/right window. Check spin axis if the ball curves consistently one way.",
+    "equipment_needed": [
+      "Rapsodo MLM",
+      "Range balls (~40)"
+    ],
+    "distances": [
+      "One club — varied targets optional"
+    ],
+    "attempts_per_distance": null,
+    "is_timed": true,
+    "tracking_type": "club_focus_session",
+    "tracking_metrics": [
+      "Club focus",
+      "Session aim",
+      "Completed"
+    ],
+    "penalty_reset_rule": null,
+    "success_target": "Complete session hitting the stated offline window aim",
+    "expected_duration_minutes": 40,
+    "rapsodo_mode": "practice",
+    "rapsodo_mode_label": "Rapsodo Practice",
+    "default_aim": "10-yard accuracy window left/right of target line; reset if you miss the window 3 in a row.",
+    "suggested_clubs": [
+      "driver",
+      "5w",
+      "3h",
+      "7i"
+    ]
+  },
+  {
+    "id": "range_lm_distance",
+    "category": "range",
+    "title": "Practice — distance game",
+    "description": "Use Rapsodo **Practice** mode. Distance game: random targets, change clubs often (~50 balls). Focus on carry control and gapping — note which clubs show the widest offline or biggest carry gaps.",
+    "equipment_needed": [
+      "Rapsodo MLM",
+      "Range balls (~50)"
+    ],
+    "distances": [
+      "Mixed — rotate clubs"
+    ],
+    "attempts_per_distance": null,
+    "is_timed": true,
+    "tracking_type": "club_focus_session",
+    "tracking_metrics": [
+      "Club focus",
+      "Session aim",
+      "Completed"
+    ],
+    "penalty_reset_rule": null,
+    "success_target": "Complete ~45 min block; log the club that needed the most attention",
+    "expected_duration_minutes": 45,
+    "rapsodo_mode": "practice",
+    "rapsodo_mode_label": "Rapsodo Practice",
+    "default_aim": "Random targets, change clubs every 5–10 shots; note worst dispersion club at end.",
+    "suggested_clubs": [
+      "driver",
+      "5i",
+      "7i",
+      "pw"
+    ]
+  },
+  {
+    "id": "range_target_irons",
+    "category": "range",
+    "title": "Target Range — approach practice",
+    "description": "Use Rapsodo **Target Range** simulation mode. Iron and approach focus: assign yourself targets at realistic approach distances and score proximity. Best for mid-iron dispersion and approach consistency (not full driver work).",
+    "equipment_needed": [
+      "Rapsodo MLM",
+      "Range balls (~40)"
+    ],
+    "distances": [
+      "Approach distances — one primary club"
+    ],
+    "attempts_per_distance": null,
+    "is_timed": true,
+    "tracking_type": "club_focus_session",
+    "tracking_metrics": [
+      "Club focus",
+      "Session aim",
+      "Completed"
+    ],
+    "penalty_reset_rule": null,
+    "success_target": "Complete target session with stable carry and lateral control",
+    "expected_duration_minutes": 40,
+    "rapsodo_mode": "target_range",
+    "rapsodo_mode_label": "Rapsodo Target Range",
+    "default_aim": "Hit assigned green targets; prioritise carry consistency and start line.",
+    "suggested_clubs": [
+      "6i",
+      "7i",
+      "8i",
+      "9i",
+      "pw"
+    ]
+  },
+  {
+    "id": "range_combine",
+    "category": "range",
+    "title": "Rapsodo Combine",
+    "description": "Use Rapsodo **Combine** mode (dedicated combine session type). Structured scoring across distances — log your combine score if shown. Good for gapping checks and scored practice when dispersion is stable.",
+    "equipment_needed": [
+      "Rapsodo MLM",
+      "Range balls (combine set)"
+    ],
+    "distances": [
+      "Combine distances"
+    ],
+    "attempts_per_distance": null,
+    "is_timed": true,
+    "tracking_type": "club_focus_session",
+    "tracking_metrics": [
+      "Club focus",
+      "Session aim",
+      "Combine score",
+      "Completed"
+    ],
+    "penalty_reset_rule": null,
+    "success_target": "Finish combine block; beat or match your recent combine score",
+    "expected_duration_minutes": 35,
+    "rapsodo_mode": "combine",
+    "rapsodo_mode_label": "Rapsodo Combine",
+    "default_aim": "Complete full combine; log total score from Rapsodo if displayed.",
+    "suggested_clubs": [
+      "mixed"
+    ]
+  },
+  {
+    "id": "range_closest_to_pin",
+    "category": "range",
+    "title": "Closest to the Pin",
+    "description": "Use Rapsodo **Closest to the Pin** simulation mode. Wedge and short-iron proximity scoring — one primary club, tight landing zone focus.",
+    "equipment_needed": [
+      "Rapsodo MLM",
+      "Range balls (~30)"
+    ],
+    "distances": [
+      "Wedge / short iron"
+    ],
+    "attempts_per_distance": null,
+    "is_timed": false,
+    "tracking_type": "club_focus_session",
+    "tracking_metrics": [
+      "Club focus",
+      "Session aim",
+      "Completed"
+    ],
+    "penalty_reset_rule": null,
+    "success_target": "Complete CTP session with majority inside proximity target",
+    "expected_duration_minutes": 25,
+    "rapsodo_mode": "closest_to_pin",
+    "rapsodo_mode_label": "Rapsodo Closest to Pin",
+    "default_aim": "Land within 15 ft of pin on majority of shots from chosen distance.",
+    "suggested_clubs": [
+      "pw",
+      "gw",
+      "sw",
+      "lw"
+    ]
+  }
+]

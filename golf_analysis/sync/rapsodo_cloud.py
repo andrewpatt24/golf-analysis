@@ -191,6 +191,14 @@ def _bearer_token_raw(cfg: RapsodoSyncConfig, *, config_path: Path | None) -> st
         if token:
             return token
         raise FileNotFoundError(f"RAPSODO_BEARER_FILE set but file missing or empty: {path}")
+    try:
+        from golf_analysis.api.dashboard_secrets_store import rapsodo_bearer_from_secrets
+
+        token = rapsodo_bearer_from_secrets()
+        if token:
+            return token
+    except ImportError:
+        pass
     token = _rapsodo_bearer_from_secrets_json(config_path)
     if token:
         return token

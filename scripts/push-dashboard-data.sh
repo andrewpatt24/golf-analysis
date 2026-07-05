@@ -13,6 +13,11 @@ DB="${GOLF_LIBRARY_DB:-$ROOT/data/library.db}"
 GARMIN="${GOLF_GARMIN_JSON:-$ROOT/data/raw/garmin/golf-export.json}"
 SETTINGS="${GOLF_DASHBOARD_SETTINGS:-$ROOT/data/dashboard_settings.json}"
 PLAYBOOK="${GOLF_ON_COURSE_PLAYBOOK:-$ROOT/data/on_course_playbook.json}"
+SECRETS="${GOLF_DASHBOARD_SECRETS:-$ROOT/data/dashboard_secrets.json}"
+GARTH_DIR="${GOLF_GARTH_DIR:-$ROOT/data/garth}"
+ACCESS_TOKENS="${GOLF_ACCESS_TOKENS_FILE:-$ROOT/data/access_tokens.json}"
+DRILL_SESSIONS="${GOLF_DRILL_SESSIONS:-$ROOT/data/drill_sessions.json}"
+TRAINING_BLOCK="${GOLF_TRAINING_BLOCK:-$ROOT/data/training_block.json}"
 
 for f in "$DB" "$GARMIN"; do
   if [[ ! -f "$f" ]]; then
@@ -47,6 +52,42 @@ echo "Pushing to gs://${BUCKET}/ ..."
 "${CP[@]}" "$GARMIN" "gs://${BUCKET}/golf-export.json"
 "${CP[@]}" "$SETTINGS" "gs://${BUCKET}/dashboard_settings.json"
 "${CP[@]}" "$PLAYBOOK" "gs://${BUCKET}/on_course_playbook.json"
+
+if [[ -f "$SECRETS" ]]; then
+  echo "Sanitizing dashboard secrets (passwords never leave this machine)..."
+  SANITIZED="$(mktemp "${TMPDIR:-/tmp}/dashboard_secrets.XXXXXX.json")"
+  UV_CACHE_DIR="${UV_CACHE_DIR:-$ROOT/.uv-cache}" uv run python -c "
+from pathlib import Path
+import json, sys
+from golf_analysis.local_auth.sanitize import sanitize_secrets_document
+p = Path(sys.argv[1])
+data = json.loads(p.read_text(encoding='utf-8'))
+Path(sys.argv[2]).write_text(json.dumps(sanitize_secrets_document(data), indent=2), encoding='utf-8')
+" "$SECRETS" "$SANITIZED"
+  "${CP[@]}" "$SANITIZED" "gs://${BUCKET}/dashboard_secrets.json"
+  rm -f "$SANITIZED"
+fi
+
+if [[ -f "$ACCESS_TOKENS" ]]; then
+  "${CP[@]}" "$ACCESS_TOKENS" "gs://${BUCKET}/access_tokens.json"
+fi
+
+if [[ -f "$DRILL_SESSIONS" ]]; then
+  "${CP[@]}" "$DRILL_SESSIONS" "gs://${BUCKET}/drill_sessions.json"
+fi
+
+if [[ -f "$TRAINING_BLOCK" ]]; then
+  "${CP[@]}" "$TRAINING_BLOCK" "gs://${BUCKET}/training_block.json"
+fi
+
+if [[ -d "$GARTH_DIR" ]]; then
+  echo "Pushing garth tokens..."
+  for f in "$GARTH_DIR"/*.json; do
+    [[ -f "$f" ]] || continue
+    base="$(basename "$f")"
+    "${CP[@]}" "$f" "gs://${BUCKET}/garth/${base}"
+  done
+fi
 
 echo "Done. Restart Cloud Run to pick up changes:"
 echo "  ./scripts/deploy-cloud-run.sh --reload-only"

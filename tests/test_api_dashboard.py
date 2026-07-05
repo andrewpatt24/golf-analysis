@@ -7,6 +7,7 @@ from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
 
+from golf_analysis.api.access import access_gate_enabled
 from golf_analysis.api.main import create_app
 from golf_analysis.repository import connect, init_schema
 
@@ -120,12 +121,27 @@ def test_range_club_compare_ok(client: TestClient) -> None:
     assert j.get("error") is None
 
 
+def test_access_gate_skipped_locally_with_token(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    monkeypatch.setenv("GOLF_ACCESS_TOKEN", "secret-token")
+    monkeypatch.delenv("K_SERVICE", raising=False)
+    monkeypatch.delenv("GOLF_REQUIRE_ACCESS_TOKEN", raising=False)
+    assert not access_gate_enabled()
+
+
+def test_access_gate_on_cloud_run(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("GOLF_ACCESS_TOKEN", "secret-token")
+    monkeypatch.setenv("K_SERVICE", "golf-dashboard")
+    assert access_gate_enabled()
+
+
 def test_access_token_required(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
     db = tmp_path / "lib.db"
     conn = connect(db)
     init_schema(conn)
     conn.close()
     monkeypatch.setenv("GOLF_ACCESS_TOKEN", "secret-token")
+    monkeypatch.setenv("GOLF_ACCESS_TOKENS_FILE", str(tmp_path / "access_tokens.json"))
+    monkeypatch.setenv("GOLF_REQUIRE_ACCESS_TOKEN", "1")
     monkeypatch.setenv("GOLF_LIBRARY_DB", str(db))
     monkeypatch.setenv("GOLF_DASHBOARD_SETTINGS", str(tmp_path / "settings.json"))
     app = create_app()
@@ -147,6 +163,8 @@ def test_access_token_cookie(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) ->
     init_schema(conn)
     conn.close()
     monkeypatch.setenv("GOLF_ACCESS_TOKEN", "secret-token")
+    monkeypatch.setenv("GOLF_ACCESS_TOKENS_FILE", str(tmp_path / "access_tokens.json"))
+    monkeypatch.setenv("GOLF_REQUIRE_ACCESS_TOKEN", "1")
     monkeypatch.setenv("GOLF_LIBRARY_DB", str(db))
     monkeypatch.setenv("GOLF_DASHBOARD_SETTINGS", str(tmp_path / "settings.json"))
     client = TestClient(create_app())

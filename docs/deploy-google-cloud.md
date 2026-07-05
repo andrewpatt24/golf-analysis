@@ -27,10 +27,20 @@ The container serves **API and UI on the same origin** (`GOLF_DASHBOARD_DIST`), 
 | SQLite library | `data/library.db` | `library.db` |
 | Garmin export (Strategy / ESZ / DSZ) | `data/raw/garmin/golf-export.json` | `golf-export.json` |
 | Dashboard settings | `data/dashboard_settings.json` | `dashboard_settings.json` |
+| Connector secrets (optional) | `data/dashboard_secrets.json` | `dashboard_secrets.json` |
+| Garmin Garth tokens (optional) | `data/garth/*.json` | `garth/*.json` |
 
-Range and Performance tabs need the DB; Strategy needs the Garmin JSON as well. After Rapsodo/Garmin sync locally, run ingest then push.
+Range and Performance tabs need the DB; Strategy needs the Garmin JSON as well.
 
-**Cloud is read-only for settings** in normal use: change year/flags on the Mac, push `dashboard_settings.json` again. (The API can still write settings on Cloud Run, but that copy is ephemeral and lost on restart.)
+### Refresh from the dashboard (recommended)
+
+Coach → **Settings** → **Data sources**:
+
+1. **Rapsodo** — paste your R-Cloud JWT, then **Refresh** (or use **Refresh all**).
+2. **Garmin Connect** — zip your `~/.garth` folder (after `garth login` on Mac) and upload, then refresh **Garmin Golf** and/or **Garmin activities**.
+3. Successful refresh on Cloud Run **writes back** to your GCS bucket (`library.db`, `golf-export.json`, secrets).
+
+You can still use CLI (`golf-ingest rapsodo-sync`, `garmin-golf-sync`, `ingest`) and `push-dashboard-data.sh` when developing locally.
 
 ## Quick start (recommended)
 
@@ -102,6 +112,27 @@ https://YOUR-SERVICE-xxxxx.run.app/?token=YOUR_TOKEN
 ### 5. Lock down who can open it (recommended)
 
 With `GOLF_ACCESS_TOKEN` set, the API and UI require that token (query `?token=…` or header `Authorization: Bearer …`). Store the full URL in a phone bookmark or password manager.
+
+**Sharing with someone else (revocable guest link):**
+
+```bash
+# optional in .env.cloud: GOLF_CLOUD_RUN_URL=https://your-service.run.app
+uv run golf-guest-token create --label "Alex"
+./scripts/push-dashboard-data.sh
+./scripts/deploy-cloud-run.sh --reload-only
+```
+
+Send them the printed `/?token=…` URL. Your owner token in `.env.cloud` is unchanged.
+
+**Revoke a guest:**
+
+```bash
+uv run golf-guest-token list
+uv run golf-guest-token revoke GUEST_ID
+./scripts/push-dashboard-data.sh && ./scripts/deploy-cloud-run.sh --reload-only
+```
+
+Guests are stored in `data/access_tokens.json` (pushed to GCS). After revoke, their cookie stops working on the next request.
 
 For stricter Google-account-only access, add [Identity-Aware Proxy](https://cloud.google.com/iap/docs) in front of Cloud Run later; the token gate is enough for a personal deployment.
 

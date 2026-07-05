@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-export type AppMode = "home" | "on-course" | "coach";
+export type AppMode = "home" | "on-course" | "coach" | "drills";
 
 interface HomeViewProps {
   onSelect: (mode: Exclude<AppMode, "home">) => void;
@@ -46,6 +46,20 @@ export default function HomeView({ onSelect }: HomeViewProps) {
           }}
         >
           On Course
+        </Button>
+        <Button
+          variant="outlined"
+          size="large"
+          onClick={() => onSelect("drills")}
+          sx={{
+            py: 2.5,
+            fontSize: "1.125rem",
+            fontWeight: 600,
+            textTransform: "none",
+            borderRadius: 2,
+          }}
+        >
+          Drills
         </Button>
         <Button
           variant="outlined"

@@ -35,7 +35,7 @@ def expand_paths(paths: list[Path]) -> list[Path]:
         if not p.exists():
             continue
         if p.is_dir():
-            for pattern in ("**/*.csv", "**/*.fit", "**/*.zip"):
+            for pattern in ("**/*.csv", "**/*.fit", "**/*.zip", "**/*.json"):
                 for f in sorted(p.glob(pattern)):
                     if f.is_file() and f not in seen:
                         seen.add(f)

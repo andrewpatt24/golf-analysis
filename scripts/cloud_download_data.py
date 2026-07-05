@@ -13,7 +13,11 @@ OBJECTS: tuple[tuple[str, str], ...] = (
     ("library.db", "GOLF_LIBRARY_DB"),
     ("golf-export.json", "GOLF_GARMIN_JSON"),
     ("dashboard_settings.json", "GOLF_DASHBOARD_SETTINGS"),
+    ("dashboard_secrets.json", "GOLF_DASHBOARD_SECRETS"),
     ("on_course_playbook.json", "GOLF_ON_COURSE_PLAYBOOK"),
+    ("access_tokens.json", "GOLF_ACCESS_TOKENS_FILE"),
+    ("drill_sessions.json", "GOLF_DRILL_SESSIONS"),
+    ("training_block.json", "GOLF_TRAINING_BLOCK"),
 )
 
 
@@ -45,6 +49,15 @@ def main() -> int:
             continue
         blob.download_to_filename(str(dest))
         print(f"cloud_download_data: downloaded {object_name} -> {dest}", file=sys.stderr)
+
+    try:
+        from golf_analysis.cloud_storage import download_garth_prefix_if_present
+
+        n = download_garth_prefix_if_present()
+        if n:
+            print(f"cloud_download_data: downloaded {n} garth token file(s)", file=sys.stderr)
+    except Exception as e:  # noqa: BLE001
+        print(f"cloud_download_data: garth download skipped: {e}", file=sys.stderr)
 
     return 0
 

@@ -1,5 +1,7 @@
 # Golf analysis
 
+**For AI agents:** operational runbook → [AGENTS.md](AGENTS.md) (data refresh, auth, deploy).
+
 Personal golf analytics: ingest **Rapsodo** range sessions and **Garmin** on-course data into a local SQLite library, run reports from the CLI, and explore trends in a **React dashboard** (Strategy, Performance, Training, Plans).
 
 ## What it does
@@ -83,6 +85,8 @@ Push your local SQLite library (+ Garmin JSON + settings) to a private bucket an
 
 **On Course prep (new courses):** Woldingham (White tees) in On Course → Course tab; more courses via `manual_courses.py` until GolfAPI ingest — see [docs/new-course-prep-plan.md](docs/new-course-prep-plan.md).
 
+**Data refresh:** Locally, `uv run local-auth-login` then ingest/push; or Coach → Settings → **Data sources** to refresh. Cloud Run uses stored JWT/Garth tokens only (no passwords). See [docs/local-auth.md](docs/local-auth.md) and [docs/deploy-google-cloud.md](docs/deploy-google-cloud.md).
+
 ## CLI overview
 
 | Command | Purpose |
@@ -109,7 +113,7 @@ Run `uv run golf-ingest --help` for all subcommands and flags.
 
 **Secrets and local data (not committed):**
 
-- Copy `secrets.json.example` → `secrets.json` and add your Rapsodo JWT
+- Copy `secrets.json.example` → `secrets.json` (Rapsodo/Garmin email+password for local login, or paste JWT manually). See [docs/local-auth.md](docs/local-auth.md).
 - Copy `config/rapsodo-endpoints.example.json` → `config/rapsodo-endpoints.json` if using cloud sync
 - Put exports under `data/raw/` and run ingest; `data/library.db` stays local
 

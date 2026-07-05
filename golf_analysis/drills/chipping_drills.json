@@ -1,0 +1,91 @@
+[
+  {
+    "id": "chip_general_practice",
+    "category": "chipping",
+    "title": "General Chipping practice",
+    "description": "Unstructured block to warm up chipping mechanics and feel.",
+    "equipment_needed": [
+      "Balls",
+      "Wedges"
+    ],
+    "distances": [
+      "Varying"
+    ],
+    "attempts_per_distance": null,
+    "is_timed": true,
+    "tracking_type": "boolean_completion",
+    "tracking_metrics": [
+      "Completed (Yes/No)"
+    ],
+    "penalty_reset_rule": null,
+    "success_target": "Complete session",
+    "expected_duration_minutes": 20
+  },
+  {
+    "id": "chip_8_of_10_30ft",
+    "category": "chipping",
+    "title": "8 out of 10 in a 3 foot circle from 30'",
+    "description": "Mark out a 3-foot circle around a hole. Hit chips from 30 feet away, trying to land and stop them inside that circle. Keep trying until you get at least 8 out of 10 balls inside the circle.",
+    "equipment_needed": [
+      "10 balls",
+      "Tees to mark circle"
+    ],
+    "distances": [
+      "30 feet"
+    ],
+    "attempts_per_distance": 10,
+    "is_timed": false,
+    "tracking_type": "score_out_of_total",
+    "tracking_metrics": [
+      "Chips Inside 3ft Circle",
+      "Total Attempts"
+    ],
+    "penalty_reset_rule": null,
+    "success_target": "8 out of 10 successful chips",
+    "expected_duration_minutes": 15
+  },
+  {
+    "id": "chip_nsew_compass",
+    "category": "chipping",
+    "title": "Chipping compass",
+    "description": "Hit 4 chips to each hole on the practice green from above, below, left, and right. If you have 4 holes, that makes 64 chips total. Score is how many finish within 3 feet of the target.",
+    "equipment_needed": [
+      "Balls"
+    ],
+    "distances": [
+      "Varying"
+    ],
+    "attempts_per_distance": 64,
+    "is_timed": false,
+    "tracking_type": "score_out_of_total",
+    "tracking_metrics": [
+      "Chips Within 3 Feet",
+      "Total Attempts"
+    ],
+    "penalty_reset_rule": null,
+    "success_target": "High number out of 64",
+    "expected_duration_minutes": 45
+  },
+  {
+    "id": "chip_par_18_challenge",
+    "category": "chipping",
+    "title": "Par-18 chipping challenge",
+    "description": "Play 9 different chipping spots (3 easy, 3 medium, 3 hard) to varying holes. Don't play the same easy spot three times. Treat each location as a par 2 (trying to get up and down in two strokes). Keep a scorecard.",
+    "equipment_needed": [
+      "1 ball",
+      "Ball marker"
+    ],
+    "distances": [
+      "Varying"
+    ],
+    "attempts_per_distance": 9,
+    "is_timed": false,
+    "tracking_type": "points_based",
+    "tracking_metrics": [
+      "Total Stroke Score"
+    ],
+    "penalty_reset_rule": null,
+    "success_target": "Shoot a score of 18 (level par)",
+    "expected_duration_minutes": 25
+  }
+]

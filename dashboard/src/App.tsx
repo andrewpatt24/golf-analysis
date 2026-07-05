@@ -57,12 +57,14 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { apiGet, apiPut } from "./api";
+import { apiGet, apiPatch, apiPost, apiPut } from "./api";
 import HomeView, { type AppMode } from "./HomeView";
 import OnCourseView from "./OnCourseView";
+import DrillsView from "./DrillsView";
+import DataSourcesSettings from "./DataSourcesSettings";
 import PlaybookEditor from "./PlaybookEditor";
 
-const TAB_KEYS = ["strategy", "performance", "range", "plans", "settings", "reference"] as const;
+const TAB_KEYS = ["plans", "strategy", "performance", "range", "settings", "reference"] as const;
 type Tab = (typeof TAB_KEYS)[number];
 
 const COLORS = [
@@ -124,12 +126,34 @@ interface Settings {
   excludedTrainingClubs: string[];
 }
 
+interface PlanSession {
+  index: number;
+  title: string;
+  description: string;
+  priority_tag: string;
+  focus?: string;
+  drill_id: string;
+  drill_title: string;
+  drill_category?: string;
+  expected_duration_minutes?: number | null;
+  success_target?: string;
+  rapsodo_mode_label?: string;
+  default_aim?: string;
+  suggested_club?: string | null;
+  completed_at?: string | null;
+  linked_session_id?: string | null;
+}
+
 interface PlanResponse {
+  block_id: string;
+  generated_at: string;
   calendar_year: number;
   sessions_planned: number;
+  coach_summary: string;
   insights: string[];
   flagged_clubs: string[];
-  sessions: { index: number; title: string; description: string; priority_tag: string }[];
+  sessions: PlanSession[];
+  all_complete: boolean;
 }
 
 interface GarminScorecardRow {
@@ -1337,7 +1361,14 @@ function tabIndex(t: Tab): number {
 export default function App() {
   const theme = useTheme();
   const [appMode, setAppMode] = useState<AppMode>("home");
-  const [tab, setTab] = useState<Tab>("strategy");
+  const [tab, setTab] = useState<Tab>("plans");
+  const [drillNav, setDrillNav] = useState<{
+    drillId: string;
+    planSessionIndex: number;
+    club?: string;
+    aim?: string;
+  } | null>(null);
+  const [planActionLoading, setPlanActionLoading] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const [meta, setMeta] = useState<Meta | null>(null);
   const [year, setYear] = useState(2026);
@@ -1472,6 +1503,45 @@ export default function App() {
     const p = await apiGet<PlanResponse>("/api/v1/plans/training-block");
     setPlan(p);
   }, []);
+
+  const markPlanSessionComplete = async (sessionIndex: number) => {
+    setPlanActionLoading(true);
+    setErr(null);
+    try {
+      const updated = await apiPatch<PlanResponse>(
+        `/api/v1/plans/training-block/sessions/${sessionIndex}/complete`,
+        {},
+      );
+      setPlan(updated);
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : String(e));
+    } finally {
+      setPlanActionLoading(false);
+    }
+  };
+
+  const regeneratePlan = async () => {
+    setPlanActionLoading(true);
+    setErr(null);
+    try {
+      const updated = await apiPost<PlanResponse>("/api/v1/plans/training-block/regenerate");
+      setPlan(updated);
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : String(e));
+    } finally {
+      setPlanActionLoading(false);
+    }
+  };
+
+  const openPlanDrill = (session: PlanSession) => {
+    setDrillNav({
+      drillId: session.drill_id,
+      planSessionIndex: session.index,
+      club: session.suggested_club ?? undefined,
+      aim: session.default_aim,
+    });
+    setAppMode("drills");
+  };
 
   const loadClubsCatalog = useCallback(async () => {
     try {
@@ -1664,15 +1734,41 @@ export default function App() {
   const fiveWayBars = fiveWaySpinAxisBars(rangeAnalytics?.shot_shape?.["five_way_spin_axis"]);
 
   if (appMode === "home") {
-    return <HomeView onSelect={setAppMode} />;
+    return (
+      <HomeView
+        onSelect={(mode) => {
+          setAppMode(mode);
+          if (mode === "coach") setTab("plans");
+        }}
+      />
+    );
   }
 
   if (appMode === "on-course") {
     return <OnCourseView onBack={() => setAppMode("home")} />;
   }
 
+  if (appMode === "drills") {
+    return (
+      <DrillsView
+        initialDrillId={drillNav?.drillId ?? null}
+        sessionPrefill={
+          drillNav?.club || drillNav?.aim
+            ? { club: drillNav.club, aim: drillNav.aim }
+            : undefined
+        }
+        onBack={() => {
+          setAppMode("coach");
+          setTab("plans");
+          setDrillNav(null);
+          void refreshPlans();
+        }}
+      />
+    );
+  }
+
   const handleTabChange = (_: React.SyntheticEvent, value: number) => {
-    setTab(TAB_KEYS[value] ?? "strategy");
+    setTab(TAB_KEYS[value] ?? "plans");
   };
 
   return (
@@ -1708,10 +1804,10 @@ export default function App() {
             "& .MuiTab-root": { minHeight: 44, textTransform: "none", fontWeight: 500 },
           }}
         >
+          <Tab label="Plans" />
           <Tab label="Strategy" />
           <Tab label="Performance" />
           <Tab label="Range" />
-          <Tab label="Plans" />
           <Tab label="Settings" />
           <Tab label="Reference" />
         </Tabs>
@@ -3284,43 +3380,122 @@ export default function App() {
         {tab === "plans" ? (
           <Paper sx={{ p: 3 }}>
             <Typography variant="h2" component="h2" gutterBottom>
-              Plans
+              Training plan
             </Typography>
             {plan ? (
-              <Stack spacing={2}>
-                <Typography variant="body1">
-                  <strong>{plan.sessions_planned}</strong> sessions · year{" "}
-                  <strong>{plan.calendar_year}</strong>
-                </Typography>
-                <Typography variant="h3" component="h3">
-                  Insights
-                </Typography>
-                <List dense disablePadding>
-                  {plan.insights.map((s, i) => (
-                    <ListItem key={i} sx={{ py: 0.5, alignItems: "flex-start" }}>
-                      <ListItemText primary={s} />
-                    </ListItem>
-                  ))}
-                </List>
-                <Divider />
+              <Stack spacing={3}>
+                <Alert severity="info" sx={{ alignItems: "flex-start" }}>
+                  <Typography variant="subtitle2" fontWeight={700} gutterBottom>
+                    Coach summary
+                  </Typography>
+                  <Typography variant="body2">{plan.coach_summary}</Typography>
+                </Alert>
+
+                <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap alignItems="center">
+                  <Chip
+                    label={`${plan.sessions.filter((s) => s.completed_at).length}/${plan.sessions_planned} complete`}
+                    color={plan.all_complete ? "success" : "default"}
+                  />
+                  <Chip label={`Year ${plan.calendar_year}`} variant="outlined" />
+                  {plan.flagged_clubs.length > 0 ? (
+                    <Chip
+                      label={`Range flags: ${plan.flagged_clubs.slice(0, 3).join(", ")}`}
+                      color="warning"
+                      variant="outlined"
+                    />
+                  ) : null}
+                </Stack>
+
+                {plan.insights.length > 0 ? (
+                  <>
+                    <Typography variant="h3" component="h3">
+                      Data insights
+                    </Typography>
+                    <List dense disablePadding>
+                      {plan.insights.map((s, i) => (
+                        <ListItem key={i} sx={{ py: 0.5, alignItems: "flex-start" }}>
+                          <ListItemText primary={s} />
+                        </ListItem>
+                      ))}
+                    </List>
+                    <Divider />
+                  </>
+                ) : null}
+
                 <Typography variant="h3" component="h3">
                   Training block
                 </Typography>
-                <Stack component="ol" spacing={2} sx={{ m: 0, pl: 3 }}>
-                  {plan.sessions.map((s) => (
-                    <Box component="li" key={s.index} sx={{ display: "list-item" }}>
-                      <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap" sx={{ mb: 0.5 }}>
-                        <Typography variant="subtitle1" component="span" fontWeight={600}>
-                          {s.title}
-                        </Typography>
-                        <Chip label={s.priority_tag} size="small" color="primary" variant="filled" />
-                      </Stack>
-                      <Typography variant="body2" color="text.secondary">
-                        {s.description}
-                      </Typography>
-                    </Box>
-                  ))}
+                <Stack spacing={2}>
+                  {plan.sessions.map((s) => {
+                    const done = Boolean(s.completed_at);
+                    return (
+                      <Paper key={s.index} variant="outlined" sx={{ p: 2, opacity: done ? 0.85 : 1 }}>
+                        <Stack spacing={1.5}>
+                          <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap" useFlexGap>
+                            <Typography variant="subtitle1" fontWeight={600}>
+                              {s.index}. {s.title}
+                            </Typography>
+                            <Chip label={s.priority_tag} size="small" color="primary" />
+                            {done ? <Chip label="Complete" size="small" color="success" /> : null}
+                          </Stack>
+                          <Typography variant="body2" color="text.secondary">
+                            {s.description}
+                          </Typography>
+                          <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                            <Chip label={s.drill_title} size="small" variant="outlined" />
+                            {s.expected_duration_minutes ? (
+                              <Chip label={`~${s.expected_duration_minutes} min`} size="small" variant="outlined" />
+                            ) : null}
+                            {s.rapsodo_mode_label ? (
+                              <Chip label={s.rapsodo_mode_label} size="small" color="info" variant="outlined" />
+                            ) : null}
+                            {s.suggested_club ? (
+                              <Chip label={`Focus: ${s.suggested_club}`} size="small" variant="outlined" />
+                            ) : null}
+                          </Stack>
+                          <Stack direction={{ xs: "column", sm: "row" }} spacing={1}>
+                            <Button
+                              variant="contained"
+                              size="small"
+                              disabled={done}
+                              onClick={() => openPlanDrill(s)}
+                              sx={{ textTransform: "none" }}
+                            >
+                              {done ? "Drill logged" : "Open drill & log session"}
+                            </Button>
+                            {!done ? (
+                              <Button
+                                variant="outlined"
+                                size="small"
+                                disabled={planActionLoading}
+                                onClick={() => void markPlanSessionComplete(s.index)}
+                                sx={{ textTransform: "none" }}
+                              >
+                                Mark complete
+                              </Button>
+                            ) : null}
+                          </Stack>
+                        </Stack>
+                      </Paper>
+                    );
+                  })}
                 </Stack>
+
+                {plan.all_complete ? (
+                  <Box>
+                    <Alert severity="success" sx={{ mb: 2 }}>
+                      Block complete — regenerate a fresh plan from your latest Garmin and Rapsodo data.
+                    </Alert>
+                    <Button
+                      variant="contained"
+                      disabled={planActionLoading}
+                      onClick={() => void regeneratePlan()}
+                      sx={{ textTransform: "none" }}
+                    >
+                      {planActionLoading ? "Generating…" : "Regenerate training block"}
+                    </Button>
+                  </Box>
+                ) : null}
               </Stack>
             ) : (
               <Typography color="text.secondary">Loading…</Typography>
@@ -3531,6 +3706,20 @@ export default function App() {
                     </Stack>
                   </AccordionDetails>
                 </Accordion>
+                <Accordion defaultExpanded>
+                  <AccordionSummary expandIcon={<Typography component="span">▾</Typography>}>
+                    <Typography fontWeight={600}>Data sources</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <DataSourcesSettings
+                      onRefreshed={() => {
+                        void loadMeta();
+                        void refreshRange(year);
+                        void loadClubsCatalog();
+                      }}
+                    />
+                  </AccordionDetails>
+                </Accordion>
                 <Accordion defaultExpanded={false}>
                   <AccordionSummary expandIcon={<Typography component="span">▾</Typography>}>
                     <Typography fontWeight={600}>On Course playbook</Typography>
@@ -3542,10 +3731,6 @@ export default function App() {
                 <Button variant="contained" disabled={saving} onClick={() => void saveSettingsForm()}>
                   {saving ? "Saving…" : "Save settings"}
                 </Button>
-                <Typography variant="caption" color="text.secondary" display="block">
-                  Secrets (bearer tokens) are not in this UI yet; configure the API host with env
-                  vars per tech spec.
-                </Typography>
               </Stack>
             ) : (
               <Typography color="text.secondary">Loading…</Typography>

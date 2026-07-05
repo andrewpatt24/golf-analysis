@@ -8,7 +8,20 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from golf_analysis.api.access import AccessTokenMiddleware
-from golf_analysis.api.routers import health, meta, on_course, performance, plans, range, reference, rounds, settings, strategy
+from golf_analysis.api.routers import (
+    data_sources,
+    drills,
+    health,
+    meta,
+    on_course,
+    performance,
+    plans,
+    range,
+    reference,
+    rounds,
+    settings,
+    strategy,
+)
 
 
 def create_app() -> FastAPI:
@@ -37,8 +50,10 @@ def create_app() -> FastAPI:
         strategy.router,
         reference.router,
         settings.router,
+        data_sources.router,
         on_course.router,
         plans.router,
+        drills.router,
     ):
         app.include_router(r, prefix="/api/v1")
 

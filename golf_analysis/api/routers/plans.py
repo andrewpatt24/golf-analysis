@@ -1,27 +1,42 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
+from pydantic import BaseModel
 
-from golf_analysis.api.deps import require_db_exists
+from golf_analysis.api.deps import garmin_export_path, require_db_exists
 from golf_analysis.api.settings_store import load_settings
 from golf_analysis.api.training_data import club_training_rows
+from golf_analysis.garmin_export_analytics import load_garmin_export, scoring_method_proxy_metrics_from_export
 from golf_analysis.range_shot_analytics import training_takeaways_for_window
 from golf_analysis.repository import connect, init_schema
+from golf_analysis.training_block_planner import build_training_block, enrich_block_completion
+from golf_analysis.training_block_store import (
+    block_all_complete,
+    clear_active_block,
+    get_active_block,
+    mark_session_complete,
+    save_active_block,
+)
 
 router = APIRouter(tags=["plans"])
 
 
-@router.get("/plans/training-block")
-def training_block_plan(
-    db: Path = Depends(require_db_exists),
-) -> dict[str, object]:
-    """Insights + N-session block from settings (NBLM-style placeholders + real LM flags)."""
+class CompleteSessionBody(BaseModel):
+    linked_session_id: str | None = None
 
-    settings = load_settings()
-    n_sessions = int(settings.get("trainingBlockSessions", 4))
-    year = int(settings.get("calendarYear", 2026))
+
+def _garmin_scoring_for_year(year: int) -> dict[str, Any] | None:
+    path = garmin_export_path()
+    data = load_garmin_export(path)
+    if data is None:
+        return None
+    return scoring_method_proxy_metrics_from_export(data, calendar_year=year)
+
+
+def _collect_plan_inputs(db: Path, year: int) -> tuple[list[str], list[str], list[str]]:
     conn = connect(db)
     init_schema(conn)
     try:
@@ -46,38 +61,82 @@ def training_block_plan(
     else:
         insights.append("No clubs flagged in dispersion rules for this window — keep baseline tracking.")
 
-    sessions: list[dict[str, object]] = []
-    templates = [
-        ("Priority 1 — Distance game", "Random targets, change clubs; ~45 min / 50 balls.", "P1"),
-        ("Priority 1 — Direction game", "10-yard accuracy window; check spin axis if curving.", "P1"),
-        ("Priority 2 — Maintenance", "Short game touch; fewer balls, quality tempo.", "P2"),
-        ("Priority 3 — Combine / gapping", "Rapsodo Combine or wedge ladder when available.", "P3"),
-    ]
-    for i in range(min(n_sessions, len(templates))):
-        title, desc, tag = templates[i]
-        sessions.append(
-            {
-                "index": i + 1,
-                "title": title,
-                "description": desc,
-                "priority_tag": tag,
-            }
-        )
-    if n_sessions > len(templates):
-        for j in range(len(templates), n_sessions):
-            sessions.append(
-                {
-                    "index": j + 1,
-                    "title": f"Extra session {j + 1}",
-                    "description": "Repeat weakest pillar drill or on-course rehearsal.",
-                    "priority_tag": "P1",
-                }
-            )
+    flagged_ids = [str(c["club"]) for c in flagged]
+    return insights, flagged_ids, take_lines
 
-    return {
-        "calendar_year": year,
-        "sessions_planned": n_sessions,
-        "insights": insights,
-        "flagged_clubs": [c["club"] for c in flagged],
-        "sessions": sessions,
-    }
+
+def _generate_block(db: Path, *, year: int, n_sessions: int) -> dict[str, Any]:
+    insights, flagged_ids, _ = _collect_plan_inputs(db, year)
+    garmin_scoring = _garmin_scoring_for_year(year)
+    block = build_training_block(
+        calendar_year=year,
+        n_sessions=n_sessions,
+        garmin_scoring=garmin_scoring,
+        rapsodo_insights=insights,
+        flagged_clubs=flagged_ids,
+    )
+    save_active_block(block)
+    return block
+
+
+def _ensure_active_block(db: Path) -> dict[str, Any]:
+    settings = load_settings()
+    year = int(settings.get("calendarYear", 2026))
+    n_sessions = int(settings.get("trainingBlockSessions", 4))
+
+    active = get_active_block()
+    if active and int(active.get("calendar_year", year)) == year:
+        return enrich_block_completion(active)
+
+    return _generate_block(db, year=year, n_sessions=n_sessions)
+
+
+@router.get("/plans/training-block")
+def training_block_plan(
+    db: Path = Depends(require_db_exists),
+) -> dict[str, object]:
+    """Active drill-linked training block; generates on first visit or new year."""
+
+    block = _ensure_active_block(db)
+    return block
+
+
+@router.post("/plans/training-block/regenerate")
+def regenerate_training_block(
+    db: Path = Depends(require_db_exists),
+) -> dict[str, object]:
+    """Start a fresh block after the current one is fully complete."""
+
+    active = get_active_block()
+    if active and not block_all_complete(active):
+        raise HTTPException(
+            status_code=400,
+            detail="Complete all sessions in the current block before regenerating.",
+        )
+
+    settings = load_settings()
+    year = int(settings.get("calendarYear", 2026))
+    n_sessions = int(settings.get("trainingBlockSessions", 4))
+    clear_active_block()
+    block = _generate_block(db, year=year, n_sessions=n_sessions)
+    return block
+
+
+@router.patch("/plans/training-block/sessions/{session_index}/complete")
+def complete_training_session(
+    session_index: int,
+    body: CompleteSessionBody | None = None,
+    db: Path = Depends(require_db_exists),
+) -> dict[str, object]:
+    payload = body or CompleteSessionBody()
+    active = _ensure_active_block(db)
+    try:
+        updated = mark_session_complete(
+            active,
+            session_index,
+            linked_session_id=payload.linked_session_id,
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e)) from e
+    save_active_block(updated)
+    return enrich_block_completion(updated)
